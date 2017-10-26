@@ -1,0 +1,33 @@
+html {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  /* background-color: #131D29; */
+  background: -webkit-radial-gradient(#0F1720, #131D29);
+  background: -o-radial-gradient(#0F1720, #131D29);
+  background: -moz-radial-gradient(#0F1720, #131D29);
+  background: radial-gradient(#0F1720, #131D29);
+  margin: 0px;
+  overflow: hidden;
+  font-family: Verdana, Geneva, sans-serif;
+}
+
+#pageContent {
+  position: absolute;
+  color: white;
+  top: 0px;
+  max-height: 100vh;
+  overflow: scroll;
+  z-index: 1000;
+}
+
+h1 {
+  margin: 50px;
+}
+
+p {
+  margin: 50px;
+  font-size: 20px;
+}
