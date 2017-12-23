@@ -264,12 +264,12 @@ function destroy() {
 //--------------------------------------------------------------------------------------------------
 
 function loadPageContent() {
-  var page = document.createElement('div');
+  let page = document.createElement('div');
   page.id = 'pageContent';
-  var body = document.querySelector('body');
+  let body = document.querySelector('body');
   body.appendChild(page);
   
-  var url = '/';
+  let url = '/';
   switch (CURRENT_PAGE) {
     case 1: url += 'frontend'; break;
     case 2: url += 'backend'; break;
@@ -279,14 +279,14 @@ function loadPageContent() {
   }
   fetch(url).then(data => data.text()).then(data => {
     document.querySelector('#pageContent').innerHTML = data;
-    var scr = document.createElement('script');
+    let scr = document.createElement('script');
     scr.src = 'scripts/flicker.js';
     page.appendChild(scr);
   })
 };
 
 function destroyPageContent() {
-  var page = document.querySelector('#pageContent');
+  let page = document.querySelector('#pageContent');
   page.parentNode.removeChild(page);
 };
 
