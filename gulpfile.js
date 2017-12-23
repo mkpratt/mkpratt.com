@@ -17,7 +17,7 @@ gulp.task('scripts', function(cb) {
     let js_dst = base + 'dist/scripts';    
     let options = {
         compress: {
-            drop_console: true,
+            drop_console: false,
             unused: true
         },
         mangle: {
