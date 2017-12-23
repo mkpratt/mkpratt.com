@@ -1,10 +1,4 @@
 // TODO:
-
-//---- EXPLORE
-//  CSS3D Renderer for titles, text, and buttons maybe (https://github.com/mrdoob/three.js/blob/master/examples/css3d_periodictable.html)
-//  CSS3D Renderer + WebGL Renderer work together (https://stackoverflow.com/questions/37446746/threejs-how-to-use-css3renderer-and-webglrenderer-to-render-2-objects-on-the-sa)
-//  Make Renderers transparent and hopefully they overlay
-
 //---- DESIGN
 //  Cube design
 //  Button design
@@ -13,13 +7,6 @@
 //  Page content
 //  Page font
 //  Live gradient in background?
-
-//---- ELEMENTS
-//  Add cube rotation buttons
-//  Add page buttons
-
-//---- FIXES and STUFF
-
 
 'use strict';
 
@@ -37,15 +24,14 @@ const State = {
 
 const Direction = {
   RIGHT: Symbol('R'),
-  LEFT: Symbol('L'),
-  UP: Symbol('U')
+  LEFT: Symbol('L')
 };
 
 var CURRENT_STATE = State.MENU;
 
 var camera, spotLight;
 var scene, renderer;
-// 3D objects
+
 var cube, frontend, backend, design, me;
 var rad90 = Math.PI / 2;
 
@@ -55,12 +41,8 @@ var obj3d, pivot;
 var neb1, neb2, star1, star2, star3, star4;
 var mainTitle, p1Title, p2Title, p3Title, p4Title;
 
-// Rotation calculations in animate()
-// rotYOffset for State.INIT, initial cube rotation
-// rotZOffset for State.MENU after cube rotates upward (xneg)
 var rotYOffset = 0, rotZOffset = 0, t = 0, csin;
 
-// Used for intersection of objects in render()
 var mouse = new THREE.Vector2(), raycaster, INTERSECTED;
 var html = document.querySelector('html');
 
@@ -69,9 +51,6 @@ var w1, w2, w3, w4;
 //--------------------------------------------------------------------------------------------------
 // Initialization of 3D Scene / Objects
 //--------------------------------------------------------------------------------------------------
-
-// init();
-// animate();
 
 function init() {
   textureLoader = new THREE.TextureLoader();
@@ -86,18 +65,11 @@ function init() {
   obj3d = new THREE.Object3D();
 
   scene.add(new THREE.HemisphereLight(0x443333, 0x111122));
-  // color, intensity, distance, angle, penumbra, decay
   spotLight = new THREE.SpotLight(0xffffbb, 1);
   spotLight.position.set(0.5,0,25);
   spotLight.position.multiplyScalar(800);
   scene.add(spotLight);
   spotLight.castShadow = true;
-  // spotLight.shadow.mapSize.width = 1024;
-  // spotLight.shadow.mapSize.height = 1024;
-  // spotLight.shadow.camera.near = 200;
-  // spotLight.shadow.camera.far = 1500;
-  // spotLight.shadow.camera.fov = 40;
-  // spotLight.shadow.bias = -0.005;
 
   // CUBE
   var geometry = new THREE.BoxBufferGeometry(200, 200, 200);
@@ -201,8 +173,7 @@ function animate() {
 // RENDERING
 function render() {
   TWEEN.update();
-
-  // Check intersection of 3D button objects
+  
   raycaster.setFromCamera(mouse, camera);
   var intersects = raycaster.intersectObjects(obj3d.children);
   if (intersects.length > 0 && intersects[0].object.name !== 'cube') {
@@ -219,40 +190,6 @@ function render() {
 //--------------------------------------------------------------------------------------------------
 // Cube Rotations
 //--------------------------------------------------------------------------------------------------
-
-function up() {
-  //neb1.style.top = '10%';
-  //img2.style.top = '10%';
-  CURRENT_STATE = State.ROTATING;
-  // Fade initBtn OUT (needs work)
-  new TWEEN.Tween(scene.getObjectByName('initBtn').material).to({ opacity: 0 }, 680)
-    .easing(TWEEN.Easing.Circular.Out)
-    .onComplete(function() {
-      removeEntity('initBtn');
-    })
-    .start();
-
-  // Recenter the Cube y rotation
-  new TWEEN.Tween(pivot.rotation).to({ y: 0 }, 220)
-    .easing(TWEEN.Easing.Quintic.Out)
-    .onComplete(function() {
-      t = 0;
-      // Fade Page 1 Text Title IN
-      // new TWEEN.Tween(scene.getObjectByName('michael text').material).to({ opacity: 1 }, 680)
-      // .easing(TWEEN.Easing.Circular.In)
-      // .start();
-    })
-    .start();
-
-  // Rotate Cube Upwards -90 radians
-  new TWEEN.Tween(pivot.rotation).to({ x: pivot.rotation.x - rad90 }, 1240)
-    .easing(TWEEN.Easing.Quintic.Out)
-    .onComplete(function() { 
-      CURRENT_STATE = State.MENU;
-      updatePage(Direction.UP);
-    })
-    .start();
-};
 
 function left() {
   CURRENT_STATE = State.ROTATING;
@@ -278,6 +215,26 @@ function right() {
     .start();
 };
 
+var CURRENT_PAGE = 1;
+function updatePage(dir) {
+  switch (dir) {
+    case Direction.RIGHT:
+      CURRENT_PAGE++;
+      if (CURRENT_PAGE > 4) CURRENT_PAGE = 1;
+      break;
+    case Direction.LEFT:
+      CURRENT_PAGE--;
+      if (CURRENT_PAGE < 1) CURRENT_PAGE = 4;
+      break;
+    default:
+      break;
+  }
+};
+
+//--------------------------------------------------------------------------------------------------
+// Focus / Destroy Page Animations
+//--------------------------------------------------------------------------------------------------
+
 function focus() {
   CURRENT_STATE = State.FOCUSING;
   // Reset rotation offset
@@ -301,25 +258,6 @@ function destroy() {
     .easing(TWEEN.Easing.Quintic.Out)
     .onComplete(function() { CURRENT_STATE = State.MENU; })
     .start();
-};
-
-var CURRENT_PAGE = 1;
-function updatePage(dir) {
-  switch (dir) {
-    case Direction.UP:
-      CURRENT_PAGE = 1;
-      break;
-    case Direction.RIGHT:
-      CURRENT_PAGE++;
-      if (CURRENT_PAGE > 4) CURRENT_PAGE = 1;
-      break;
-    case Direction.LEFT:
-      CURRENT_PAGE--;
-      if (CURRENT_PAGE < 1) CURRENT_PAGE = 4;
-      break;
-    default:
-      break;
-  }
 };
 
 //--------------------------------------------------------------------------------------------------
@@ -407,6 +345,7 @@ function onDocumentKeyDown(event) {
   }
 };
 
+// Call when DOM ready
 function ready() {
   init();
   animate()
