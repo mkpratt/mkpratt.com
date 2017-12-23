@@ -15,8 +15,8 @@ document.addEventListener('mousemove', function updateMousePosition(ev) {
     if (mx < midX) px = -(midX-mx); else px = mx-midX;
     if (my < midY) py = -(midY-my); else py = my-midY;
 
-    img1 = document.getElementById('nebula1'); img2 = document.getElementById('nebula2');
-    stars = document.getElementById('stars'); stars2 = document.getElementById('stars2');
+    img1 = document.getElementById('n1'); img2 = document.getElementById('n2');
+    stars = document.getElementById('s1'); stars2 = document.getElementById('s2');
     img1.style.transform = 'translate(' + -(px * .096) + 'px, ' + -(py * .048) + 'px)';
     img2.style.transform = 'translate(' + -(px * .048) + 'px, ' + -(py * .016) + 'px)';
     stars.style.transform = 'translate(' + -(px * 0.064) + 'px, ' + -(py * 0.032) + 'px)';

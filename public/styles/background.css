@@ -14,7 +14,7 @@
 .nebula1 {
   left: -10%;
   z-index: 2;
-  background-image: url('../images/neb.png');
+  background-image: url('../images/n.png');
 }
 
 .nebula2 {
@@ -23,8 +23,8 @@
   top: -5%;
   right: -25%;
   z-index: 4;
-  background-image: url('../images/neb-flipped.png');
-  background-blend-mode: color-dodge;
+  background-image: url('../images/n-f.png');
+  mix-blend-mode: color-dodge;
 }
 
 .stars {
@@ -37,18 +37,18 @@
 
 .stars-small {
   z-index: 1;
-  background-image: url('../images/sm-stars.png');
+  background-image: url('../images/sm-s.png');
 }
 
 .stars-small2 {
   z-index: 3;
-  background-image: url('../images/sm-stars-flipped.png');
+  background-image: url('../images/sm-s-f.png');
 }
 
 .stars-small3 {
   top: 15%;
   z-index: 5;
-  background-image: url('../images/sm-stars-flipped2.png');
+  background-image: url('../images/sm-s-f2.png');
 }
 
 .stars-large {
@@ -56,5 +56,5 @@
   width: 140%;
   bottom: -20%;
   z-index: 6;
-  background-image: url('../images/lg-stars.png');
+  background-image: url('../images/lg-s.png');
 }

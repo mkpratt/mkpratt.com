@@ -74,8 +74,8 @@ function init() {
   // CUBE
   var geometry = new THREE.BoxBufferGeometry(200, 200, 200);
 
-  var pre = 'images/cube-0';
-  var imgs = ['1', '2', 'ignore', 'ignore', '5', '6'];
+  var pre = 'images/c';
+  var imgs = ['1', '2', 'ig', 'ig', '5', '6'];
   var suff = '.jpg';
   var materialArr = [];
   for (let i = 0; i < 6; i++) {
@@ -120,12 +120,12 @@ function init() {
   document.addEventListener('keydown', onDocumentKeyDown, false);
 
   // IMAGE ELEMENTS
-  neb1 = document.getElementById('nebula1');
-  neb2 = document.getElementById('nebula2');
-  star1 = document.getElementById('stars1');
-  star2 = document.getElementById('stars2');
-  star3 = document.getElementById('stars3');
-  star4 = document.getElementById('stars4');
+  neb1 = document.getElementById('n1');
+  neb2 = document.getElementById('n2');
+  star1 = document.getElementById('s1');
+  star2 = document.getElementById('s2');
+  star3 = document.getElementById('s3');
+  star4 = document.getElementById('s4');
 };
 
 async function loadJson(shape, obj, posx, posy, posz, rotx, roty, rotz, scale, name) {
