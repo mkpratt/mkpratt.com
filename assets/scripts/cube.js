@@ -1,9 +1,4 @@
 // TODO:
-//---- DESIGN
-//  Cube design
-//  Button design
-//  Title design
-//  Title font (typeface.json format)
 //  Page content
 //  Page font
 //  Live gradient in background?
@@ -36,17 +31,14 @@ var cube, frontend, backend, design, me;
 var rad90 = Math.PI / 2;
 
 var textureLoader, jsonLoader;
-var obj3d, pivot;
+var obj3d;
 
 var neb1, neb2, star1, star2, star3, star4;
-var mainTitle, p1Title, p2Title, p3Title, p4Title;
 
 var rotYOffset = 0, rotZOffset = 0, t = 0, csin;
 
 var mouse = new THREE.Vector2(), raycaster, INTERSECTED;
 var html = document.querySelector('html');
-
-var w1, w2, w3, w4;
 
 //--------------------------------------------------------------------------------------------------
 // Initialization of 3D Scene / Objects
@@ -74,14 +66,15 @@ function init() {
   // CUBE
   var geometry = new THREE.BoxBufferGeometry(200, 200, 200);
 
-  var pre = 'images/cube-0';
+  var pre = 'assets/images/cube-0';
   var imgs = ['1', '2', 'ignore', 'ignore', '5', '6'];
   var suff = '.jpg';
   var materialArr = [];
   for (let i = 0; i < 6; i++) {
     if (i !== 2 && i !== 3) {
       materialArr.push(new THREE.MeshBasicMaterial({
-        map: textureLoader.load(pre + imgs[i] + suff)
+        map: textureLoader.load(pre + imgs[i] + suff),
+        transparent: true
       }));
     } else {
       materialArr.push(new THREE.MeshBasicMaterial({ color: 0x000000 }));
@@ -98,10 +91,7 @@ function init() {
   loadJson('pentagon', design, -100, -5, 0, rad90, 0, rad90, 80, 'design');
   loadJson('square', me, 0, 6.5, -100, -rad90, Math.PI, 0, 77.5, 'me');
 
-  pivot = new THREE.Group();
-  pivot.add(obj3d);
-
-  scene.add(pivot);
+  scene.add(obj3d);
 
   raycaster = new THREE.Raycaster();
 
@@ -129,60 +119,46 @@ function init() {
 };
 
 async function loadJson(shape, obj, posx, posy, posz, rotx, roty, rotz, scale, name) {
-  jsonLoader.load('scripts/models/' + shape + '.js', function(g) {
-    obj = new THREE.Mesh(g, new THREE.MeshPhongMaterial({ shininess: 100, map: textureLoader.load('textures/uv_' + shape + '.png') }));
+  jsonLoader.load('assets/scripts/models/' + shape + '.js', function(g) {
+    obj = new THREE.Mesh(g, new THREE.MeshPhongMaterial({ shininess: 100, map: textureLoader.load('assets/textures/uv_' + shape + '.png'), transparent: true }));
     obj.position.set(posx,posy,posz); obj.rotation.set(rotx,roty,rotz); obj.scale.set(scale,scale,scale); obj.name = name; obj3d.add(obj);
   });
-}
+};
 
 //--------------------------------------------------------------------------------------------------
 // Animate / Render
 //--------------------------------------------------------------------------------------------------
 
-// ANIMATION
 function animate() {
   requestAnimationFrame(animate);
-
-  if (CURRENT_STATE === State.MENU || CURRENT_STATE === State.INIT) {
-    t += 0.0015; //0.00098;
+  if (CURRENT_STATE !== State.ROTATING) {
+    t += 0.0015; 
     csin = 0.24 * Math.sin(t);
-
+    // Image Positions
     star1.style.transform = 'matrix3d(1,0,0.00,0,0.00,1,0.00,0,0,0,1,0,' + (csin * 175) + ',0,0,1)';
     neb1.style.transform = 'matrix3d(1,0,0.00,0,0.00,1,0.00,0,0,0,1,0,' + (csin * 150) + ',0,0,1)';
     star2.style.transform = 'matrix3d(1,0,0.00,0,0.00,1,0.00,0,0,0,1,0,' + (csin * 200) + ',0,0,1)';
     neb2.style.transform = 'matrix3d(1,0,0.00,0,0.00,1,0.00,0,0,0,1,0,' + (csin * 500) + ',0,0,1)';
     star3.style.transform = 'matrix3d(1,0,0.00,0,0.00,1,0.00,0,0,0,1,0,' + (csin * 625) + ',0,0,1)';
     star4.style.transform = 'matrix3d(1,0,0.00,0,0.00,1,0.00,0,0,0,1,0,' + (csin * 950) + ',0,0,1)';
-
-    switch(CURRENT_STATE) {
-      case State.MENU:
-        pivot.rotation.y = csin + rotYOffset;
-        break;
-      default: break;
-    }
-  } else if (CURRENT_STATE !== State.ROTATING && t !== 0) {
-    t = 0;
-    // if we want the cube to return to the sinusoidal position, 
-    // get rid of t = 0 and add a TWEEN animation to restore csin to cube.rotation.y
+    // Object Rotation
+    obj3d.rotation.y = csin + rotYOffset;
   }
-
   render();
 };
 
-// RENDERING
 function render() {
   TWEEN.update();
-  
   raycaster.setFromCamera(mouse, camera);
   var intersects = raycaster.intersectObjects(obj3d.children);
   if (intersects.length > 0 && intersects[0].object.name !== 'cube') {
+    // TODO: Don't make the cursor a pointer if it's not the current page object
     html.style.cursor = 'pointer';
     INTERSECTED = intersects[0].object;
   } else {
     if (html.style.cursor !== 'default') html.style.cursor = 'default';
     INTERSECTED = null;
   }
-
   renderer.render(scene, camera);
 };
 
@@ -192,7 +168,7 @@ function render() {
 
 function left() {
   CURRENT_STATE = State.ROTATING;
-  new TWEEN.Tween(pivot.rotation).to({ y: pivot.rotation.y + rad90 }, 680)
+  new TWEEN.Tween(obj3d.rotation).to({ y: obj3d.rotation.y + rad90 }, 680)
     .easing(TWEEN.Easing.Quintic.Out)
     .onComplete(function() { 
       CURRENT_STATE = State.MENU; 
@@ -204,7 +180,7 @@ function left() {
 
 function right() {
   CURRENT_STATE = State.ROTATING;
-  new TWEEN.Tween(pivot.rotation).to({ y: pivot.rotation.y - rad90, }, 680)
+  new TWEEN.Tween(obj3d.rotation).to({ y: obj3d.rotation.y - rad90, }, 680)
     .easing(TWEEN.Easing.Quintic.Out)
     .onComplete(function() { 
       CURRENT_STATE = State.MENU; 
@@ -236,27 +212,43 @@ function updatePage(dir) {
 
 function focus() {
   CURRENT_STATE = State.FOCUSING;
-  // Reset rotation offset
-  new TWEEN.Tween(pivot.rotation).to({ y: pivot.rotation.y + -(csin) }, 220)
-    .easing(TWEEN.Easing.Quintic.Out)
-    .start();
-  // Fix this zoom in to be dynamic based on the size of the cube and aspect ratio of the window
-  new TWEEN.Tween(camera.position).to({ z: -101 }, 1680) // 275, z: 101
+  new TWEEN.Tween(camera.position).to({ z: 1000 }, 480)
     .easing(TWEEN.Easing.Quintic.Out)
     .onComplete(function() { 
       CURRENT_STATE = State.PAGE;
       loadPageContent(); 
     })
     .start();
+  setOpacity(0);  
 };
 
 function destroy() {
   destroyPageContent();
   CURRENT_STATE = State.FOCUSING;
-  new TWEEN.Tween(camera.position).to({ z: 700 }, 680)
+  new TWEEN.Tween(camera.position).to({ z: 700 }, 480)
     .easing(TWEEN.Easing.Quintic.Out)
     .onComplete(function() { CURRENT_STATE = State.MENU; })
     .start();
+  setOpacity(1);  
+};
+
+async function setOpacity(op) {
+  obj3d.traverse(function(o) {
+    o.children.forEach(function(el) {
+      if (el.material && el.material.transparent) {
+        new TWEEN.Tween(el.material).to({opacity: op}, 300)
+          .easing(TWEEN.Easing.Quintic.Out)
+          .start();
+      } else {
+        let elmats = el.material.materials;
+        for (let i = 0; i < elmats.length; i++) {
+          new TWEEN.Tween(elmats[i]).to({opacity: op}, 360)
+            .easing(TWEEN.Easing.Quintic.Out)
+            .start();
+        }
+      }
+    });
+  });
 };
 
 //--------------------------------------------------------------------------------------------------
@@ -269,20 +261,20 @@ function loadPageContent() {
   var body = document.querySelector('body');
   body.appendChild(page);
   
-  var url = '/';
+  var url = window.location.href + 'views/';
   switch (CURRENT_PAGE) {
-    case 1: url += 'frontend'; break;
-    case 2: url += 'backend'; break;
-    case 3: url += 'me'; break;
-    case 4: url += 'design'; break;
+    case 1: url += 'frontend.html'; break;
+    case 2: url += 'backend.html'; break;
+    case 3: url += 'me.html'; break;
+    case 4: url += 'design.html'; break;
     default: break;
   }
   fetch(url).then(data => data.text()).then(data => {
     document.querySelector('#pageContent').innerHTML = data;
     var scr = document.createElement('script');
-    scr.src = 'scripts/flicker.js';
+    scr.src = 'assets/scripts/flicker.js';
     page.appendChild(scr);
-  })
+  });
 };
 
 function destroyPageContent() {
@@ -348,7 +340,7 @@ function onDocumentKeyDown(event) {
 function ready() {
   init();
   animate()
-}
+};
 // DOM ready
 if (document.attachEvent ? document.readyState === 'complete' : document.readyState !== 'loading'){
   ready();
