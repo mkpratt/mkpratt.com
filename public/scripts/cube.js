@@ -103,7 +103,6 @@ function init() {
 
   scene.add(pivot);
 
-  // RAYCASTER
   raycaster = new THREE.Raycaster();
 
   renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
