@@ -19,19 +19,7 @@
 //  Add page buttons
 
 //---- FIXES and STUFF
-//  Fix rotations of main/page titles and init/page buttons to rotate spherically 
-//    Option 1: (https://threejs.org/docs/#api/core/Object3D.rotateOnAxis)
-//      + THREE.Object3D.rotateOnAxis(THREE.Vector3 axis, radius)
-//    Option 2: (https://stackoverflow.com/questions/17907293/three-js-rotate-object3d-around-y-axis-at-it-center)
-//      + var group = new THREE.Object3D(); group.add(object1); 
-//        group.add(object2); objec‌​t2.x = 100;
-//        group.rotation.y += radians
-//  Fix 'initBtn' to load textures like 'cube' 
-//    + DONE. Still need to figure out the textures or if this should be flat
-//  Figure out a snazzy way to make element disappear (cube rotation, INIT -> MENU, etc)
-//  Parallax background moves on cube rotation and when passively rotating
-//    + DONE. Needs minor adjustments
-//  TWEEN background images back to center on rotate UP
+
 
 'use strict';
 
@@ -57,9 +45,11 @@ var CURRENT_STATE = State.MENU;
 
 var camera, spotLight;
 var scene, renderer;
-var cube, frontend;
+// 3D objects
+var cube, frontend, backend, design, me;
 var rad90 = Math.PI / 2;
 
+var textureLoader, jsonLoader;
 var obj3d, pivot;
 
 var neb1, neb2, star1, star2, star3, star4;
@@ -74,6 +64,8 @@ var rotYOffset = 0, rotZOffset = 0, t = 0, csin;
 var mouse = new THREE.Vector2(), raycaster, INTERSECTED;
 var html = document.querySelector('html');
 
+var w1, w2, w3, w4;
+
 //--------------------------------------------------------------------------------------------------
 // Initialization of 3D Scene / Objects
 //--------------------------------------------------------------------------------------------------
@@ -82,6 +74,9 @@ var html = document.querySelector('html');
 // animate();
 
 function init() {
+  textureLoader = new THREE.TextureLoader();
+  jsonLoader = new THREE.JSONLoader();
+
   // CAMERA
   camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 1, 1000);
   camera.position.z = 700;
@@ -107,7 +102,6 @@ function init() {
   // CUBE
   var geometry = new THREE.BoxBufferGeometry(200, 200, 200);
 
-  var loader = new THREE.TextureLoader();
   var pre = 'images/cube-0';
   var imgs = ['1', '2', 'ignore', 'ignore', '5', '6'];
   var suff = '.jpg';
@@ -115,7 +109,7 @@ function init() {
   for (let i = 0; i < 6; i++) {
     if (i !== 2 && i !== 3) {
       materialArr.push(new THREE.MeshBasicMaterial({
-        map: loader.load(pre + imgs[i] + suff)
+        map: textureLoader.load(pre + imgs[i] + suff)
       }));
     } else {
       materialArr.push(new THREE.MeshBasicMaterial({ color: 0x000000 }));
@@ -127,27 +121,18 @@ function init() {
   cube.name = 'cube';
   obj3d.add(cube);
 
-  // Front-end triangle object
-  var jsonLoader = new THREE.JSONLoader();
-  jsonLoader.load('scripts/models/fe.js', function(g) {
-    frontend = new THREE.Mesh(g, new THREE.MeshPhongMaterial({
-      //specular: 0xfefefe,
-      shininess: 100,
-      map: loader.load('textures/fe-uv.png')
-    }));
-    frontend.position.set(0,15,107.5);
-    frontend.rotation.set(rad90,0,0);
-    frontend.scale.set(47,47,47);
-    frontend.name = 'frontend';
-    obj3d.add(frontend);
-  });
+  loadJson('triangle', frontend, 0, 16, 100, rad90, -2.095, 0, 94, 'frontend');
+  loadJson('circle', backend, 100, 1, 0, rad90-0.56, 0, -rad90, 72, 'backend');
+  loadJson('pentagon', design, -100, -5, 0, rad90, 0, rad90, 80, 'design');
+  loadJson('square', me, 0, 6.5, -100, -rad90, Math.PI, 0, 77.5, 'me');
 
   pivot = new THREE.Group();
   pivot.add(obj3d);
+
   scene.add(pivot);
 
   // RAYCASTER
-  // raycaster = new THREE.Raycaster();
+  raycaster = new THREE.Raycaster();
 
   renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
   renderer.setPixelRatio(window.devicePixelRatio);
@@ -171,6 +156,13 @@ function init() {
   star3 = document.getElementById('stars3');
   star4 = document.getElementById('stars4');
 };
+
+async function loadJson(shape, obj, posx, posy, posz, rotx, roty, rotz, scale, name) {
+  jsonLoader.load('scripts/models/' + shape + '.js', function(g) {
+    obj = new THREE.Mesh(g, new THREE.MeshPhongMaterial({ shininess: 100, map: textureLoader.load('textures/uv_' + shape + '.png') }));
+    obj.position.set(posx,posy,posz); obj.rotation.set(rotx,roty,rotz); obj.scale.set(scale,scale,scale); obj.name = name; obj3d.add(obj);
+  });
+}
 
 //--------------------------------------------------------------------------------------------------
 // Animate / Render
@@ -211,15 +203,15 @@ function render() {
   TWEEN.update();
 
   // Check intersection of 3D button objects
-  // raycaster.setFromCamera(mouse, camera);
-  // var intersects = raycaster.intersectObjects(scene.children);
-  // if (intersects.length > 0 && intersects[0].object.name === 'initBtn') {
-  //   html.style.cursor = 'pointer';
-  //   INTERSECTED = intersects[0].object;
-  // } else {
-  //   if (html.style.cursor !== 'default') html.style.cursor = 'default';
-  //   INTERSECTED = null;
-  // }
+  raycaster.setFromCamera(mouse, camera);
+  var intersects = raycaster.intersectObjects(obj3d.children);
+  if (intersects.length > 0 && intersects[0].object.name !== 'cube') {
+    html.style.cursor = 'pointer';
+    INTERSECTED = intersects[0].object;
+  } else {
+    if (html.style.cursor !== 'default') html.style.cursor = 'default';
+    INTERSECTED = null;
+  }
 
   renderer.render(scene, camera);
 };
@@ -239,16 +231,6 @@ function up() {
       removeEntity('initBtn');
     })
     .start();
-
-  // TWEEN BG IMAGES BACK TO CENTER HERE
-
-  // Fade Main Title OUT
-  // new TWEEN.Tween(scene.getObjectByName('main title text').material).to({ opacity: 0 }, 680)
-  //   .easing(TWEEN.Easing.Circular.Out)
-  //   .onComplete(function() {
-  //     removeEntity('main title text');
-  //   })
-  //   .start();
 
   // Recenter the Cube y rotation
   new TWEEN.Tween(pivot.rotation).to({ y: 0 }, 220)
@@ -303,7 +285,7 @@ function focus() {
     .easing(TWEEN.Easing.Quintic.Out)
     .start();
   // Fix this zoom in to be dynamic based on the size of the cube and aspect ratio of the window
-  new TWEEN.Tween(camera.position).to({ z: 101 }, 680) // 275
+  new TWEEN.Tween(camera.position).to({ z: -101 }, 1680) // 275, z: 101
     .easing(TWEEN.Easing.Quintic.Out)
     .onComplete(function() { 
       CURRENT_STATE = State.PAGE;
@@ -352,10 +334,10 @@ function loadPageContent() {
   
   var url = '/';
   switch (CURRENT_PAGE) {
-    case 1: url += 'test1'; break;
-    case 2: url += 'test2'; break;
-    case 3: url += 'test3'; break;
-    case 4: url += 'test4'; break;
+    case 1: url += 'frontend'; break;
+    case 2: url += 'backend'; break;
+    case 3: url += 'me'; break;
+    case 4: url += 'design'; break;
     default: break;
   }
   fetch(url).then(data => data.text()).then(data => {
@@ -396,7 +378,12 @@ function onDocumentMouseClick(event) {
       case 'initBtn':
         up();
         break;
-      // add other button method calls here
+      case 'frontend':
+      case 'backend':
+      case 'design':
+      case 'me':
+        focus();
+        break;
       default:
         break;
     }

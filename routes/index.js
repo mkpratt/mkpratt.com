@@ -6,21 +6,21 @@ router.get('/', function(req, res, next) {
   res.render('index');
 });
 
-/* GET test pages. */
-router.get('/test1', function(req, res, next) {
-  res.render('test1.pug', { root: 'views' });
+/* GET pages. */
+router.get('/frontend', function(req, res, next) {
+  res.render('frontend.pug', { root: 'views' });
 });
 
-router.get('/test2', function(req, res, next) {
-  res.render('test2.pug', { root: 'views' });
+router.get('/backend', function(req, res, next) {
+  res.render('backend.pug', { root: 'views' });
 });
 
-router.get('/test3', function(req, res, next) {
-  res.render('test3.pug', { root: 'views' });
+router.get('/me', function(req, res, next) {
+  res.render('me.pug', { root: 'views' });
 });
 
-router.get('/test4', function(req, res, next) {
-  res.render('test4.pug', { root: 'views' });
+router.get('/design', function(req, res, next) {
+  res.render('design.pug', { root: 'views' });
 });
 
 module.exports = router;
