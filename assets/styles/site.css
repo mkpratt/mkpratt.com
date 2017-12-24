@@ -19,7 +19,7 @@ body {
   color: white;
   top: 0px;
   max-height: 100vh;
-  overflow: scroll;
+  overflow: hidden;
   z-index: 1000;
 }
 
@@ -30,4 +30,33 @@ h1 {
 p {
   margin: 50px;
   font-size: 20px;
+}
+
+#left {
+  width: 100px;
+  height: 100px;
+  background-color: red;
+  color: blue;
+  position: absolute;
+  top: 40%;
+  left: 20%;
+}
+
+#left:hover {
+  cursor: pointer;
+}
+
+#right {
+  width: 100px;
+  height: 100px;
+  background-color: red;
+  color: blue;
+  position: absolute;
+  top: 40%;
+  right: 20%;
+  cursor: pointer;
+}
+
+#right:hover {
+  cursor: pointer;
 }

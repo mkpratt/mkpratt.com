@@ -1,17 +1,19 @@
 {
-  "name": "mkpratt",
+  "name": "mkpratt.com",
   "version": "1.0.0",
-  "private": true,
+  "description": "This project was initialized with <b>Express</b> and uses a <b>PUG view manager</b> and <b>Node</b> routing. This website features an alive parallax space environment with custom <b>3D</b> objects made possible by <b>THREE.js</b> and <b>WebGL</b>. Most of the 3D objects were custom built in <b>Blender</b>. These custom 3D objects utilize <b>UV mapped textures</b>. This website is mostly experimental in which I can give the vistor an experience different from most generic websites. The design for this website was made in collaboration with <a href=\"//www.garthpratt.com\">Garth Pratt</a>.",
+  "main": "index.js",
   "scripts": {
-    "start": "node ./bin/www"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "dependencies": {
-    "body-parser": "~1.17.1",
-    "cookie-parser": "~1.4.3",
-    "debug": "~2.6.3",
-    "express": "~4.15.2",
-    "morgan": "~1.8.1",
-    "pug": "^2.0.0-rc.4",
-    "serve-favicon": "^2.4.4"
-  }
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mkpratt/mkpratt.com.git"
+  },
+  "author": "mkpratt",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mkpratt/mkpratt.com/issues"
+  },
+  "homepage": "https://github.com/mkpratt/mkpratt.com#readme"
 }
