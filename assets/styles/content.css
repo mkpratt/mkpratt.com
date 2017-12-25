@@ -1,0 +1,31 @@
+.test-btn {
+  position: absolute;
+  bottom: 5%;
+  left: 5%;
+}
+
+.bg {
+  height: 120%;
+  width: 100%;
+  position: absolute;
+  top: -10%;
+  background-color: #3f2537;
+  will-change: transform;
+  transition: all 480ms cubic-bezier(0.42,0,0.58,1);
+  
+  -webkit-transform: skewX(-23deg) translateX(30%);
+  -ms-transform: skewX(-23deg) translateX(30%);
+  transform: skewX(-23deg) translateX(30%);
+
+  -webkit-box-shadow: 0px 0px 88px 5px rgba(0,0,0,0.93);
+  -moz-box-shadow: 0px 0px 88px 5px rgba(0,0,0,0.93);
+  box-shadow: 0px 0px 88px 5px rgba(0,0,0,0.93);
+}
+
+.animating .bg {
+  transition: all 480ms ease-in;
+}
+
+.view-content.animating .bg {
+  transition: all 480ms ease-out;
+}
