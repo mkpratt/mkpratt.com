@@ -29,3 +29,38 @@
 .view-content.animating .bg {
   transition: all 480ms ease-out;
 }
+
+.row {
+  display: flex;
+    flex-direction: row;
+    height: 150px;
+    margin: 30px 0;
+    position: absolute;
+}
+
+.row:first-child {
+  top: 25%;
+    left: 30%;
+}
+.row:nth-child(2) {
+  top: 50%;
+    left: 32%;
+}
+
+.first-row-el {
+  width: 340px;
+    height: 220px;
+    background-color: red;
+    margin: 0 30px;
+}
+
+.second-row-el {
+  width: 320px;
+    height: 200px;
+    background-color: blue;
+    margin: 0 30px;
+}
+
+.third-row-el {
+
+}
