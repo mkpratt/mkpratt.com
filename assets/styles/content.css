@@ -2,6 +2,8 @@
   position: absolute;
   bottom: 5%;
   left: 5%;
+
+  z-index: 1000000;
 }
 
 .bg {
@@ -11,7 +13,6 @@
   top: -10%;
   background-color: #3f2537;
   will-change: transform;
-  transition: all 480ms cubic-bezier(0.42,0,0.58,1);
   
   -webkit-transform: skewX(-23deg) translateX(30%);
   -ms-transform: skewX(-23deg) translateX(30%);
@@ -20,47 +21,69 @@
   -webkit-box-shadow: 0px 0px 88px 5px rgba(0,0,0,0.93);
   -moz-box-shadow: 0px 0px 88px 5px rgba(0,0,0,0.93);
   box-shadow: 0px 0px 88px 5px rgba(0,0,0,0.93);
+
+  z-index: 1000;
 }
 
-.animating .bg {
-  transition: all 480ms ease-in;
+.animating {
+  -webkit-transition: all 480ms cubic-bezier(0.230, 1.000, 0.320, 1.000); 
+  -moz-transition: all 480ms cubic-bezier(0.230, 1.000, 0.320, 1.000); 
+  -o-transition: all 480ms cubic-bezier(0.230, 1.000, 0.320, 1.000); 
+  transition: all 480ms cubic-bezier(0.230, 1.000, 0.320, 1.000);
 }
 
-.view-content.animating .bg {
-  transition: all 480ms ease-out;
+.view-content.animating {
+  -webkit-transition: all 320ms cubic-bezier(0.230, 1.000, 0.320, 1.000); 
+  -moz-transition: all 320ms cubic-bezier(0.230, 1.000, 0.320, 1.000); 
+  -o-transition: all 320ms cubic-bezier(0.230, 1.000, 0.320, 1.000); 
+  transition: all 320ms cubic-bezier(0.230, 1.000, 0.320, 1.000);
+}
+
+.content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  z-index: 1100;
 }
 
 .row {
   display: flex;
-    flex-direction: row;
-    height: 150px;
-    margin: 30px 0;
-    position: absolute;
+  flex-direction: row;
+  flex: 4;
+  box-sizing: border-box;
+  width: 100%;
+  margin: 30px 0;
+  z-index: 1110;
 }
 
 .row:first-child {
-  top: 25%;
-    left: 30%;
+    padding: 0 140px 0 0;
 }
 .row:nth-child(2) {
-  top: 50%;
-    left: 32%;
+    padding: 0 80px 0 60px;
 }
 
-.first-row-el {
-  width: 340px;
-    height: 220px;
-    background-color: red;
-    margin: 0 30px;
+.row:last-child {
+  flex: 3;
+  padding: 0 20px 0 120px;
 }
 
-.second-row-el {
-  width: 320px;
-    height: 200px;
-    background-color: blue;
-    margin: 0 30px;
+.row > div {
+  height: 100%;
+  flex: 1;
+  margin: 0 30px;
+  z-index: 1111;
 }
 
-.third-row-el {
+.row:first-child > div {
+  background-color: red;
+}
 
+.row:nth-child(2) > div {
+  background-color: blue;
+}
+
+.row:last-child > div {
+  background-color: yellow;
 }

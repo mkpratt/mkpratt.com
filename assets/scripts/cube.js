@@ -132,17 +132,17 @@ async function loadJson(shape, obj, posx, posy, posz, rotx, roty, rotz, scale, n
 function animate() {
   requestAnimationFrame(animate);
   if (CURRENT_STATE !== State.ROTATING) {
-    t += 0.0015; 
-    csin = 0.24 * Math.sin(t);
-    // Image Positions
-    star1.style.transform = 'matrix3d(1,0,0.00,0,0.00,1,0.00,0,0,0,1,0,' + (csin * 175) + ',0,0,1)';
-    neb1.style.transform = 'matrix3d(1,0,0.00,0,0.00,1,0.00,0,0,0,1,0,' + (csin * 150) + ',0,0,1)';
-    star2.style.transform = 'matrix3d(1,0,0.00,0,0.00,1,0.00,0,0,0,1,0,' + (csin * 200) + ',0,0,1)';
-    neb2.style.transform = 'matrix3d(1,0,0.00,0,0.00,1,0.00,0,0,0,1,0,' + (csin * 500) + ',0,0,1)';
-    star3.style.transform = 'matrix3d(1,0,0.00,0,0.00,1,0.00,0,0,0,1,0,' + (csin * 625) + ',0,0,1)';
-    star4.style.transform = 'matrix3d(1,0,0.00,0,0.00,1,0.00,0,0,0,1,0,' + (csin * 950) + ',0,0,1)';
-    // Object Rotation
-    obj3d.rotation.y = csin + rotYOffset;
+    // t += 0.0015; 
+    // csin = 0.24 * Math.sin(t);
+    // // Image Positions
+    // star1.style.transform = 'matrix3d(1,0,0.00,0,0.00,1,0.00,0,0,0,1,0,' + (csin * 175) + ',0,0,1)';
+    // neb1.style.transform = 'matrix3d(1,0,0.00,0,0.00,1,0.00,0,0,0,1,0,' + (csin * 150) + ',0,0,1)';
+    // star2.style.transform = 'matrix3d(1,0,0.00,0,0.00,1,0.00,0,0,0,1,0,' + (csin * 200) + ',0,0,1)';
+    // neb2.style.transform = 'matrix3d(1,0,0.00,0,0.00,1,0.00,0,0,0,1,0,' + (csin * 500) + ',0,0,1)';
+    // star3.style.transform = 'matrix3d(1,0,0.00,0,0.00,1,0.00,0,0,0,1,0,' + (csin * 625) + ',0,0,1)';
+    // star4.style.transform = 'matrix3d(1,0,0.00,0,0.00,1,0.00,0,0,0,1,0,' + (csin * 950) + ',0,0,1)';
+    // // Object Rotation
+    // obj3d.rotation.y = csin + rotYOffset;
   }
   render();
 };
@@ -227,22 +227,24 @@ function destroy() {
   CURRENT_STATE = State.FOCUSING;
   new TWEEN.Tween(camera.position).to({ z: 700 }, 480)
     .easing(TWEEN.Easing.Quintic.Out)
-    .onComplete(function() { CURRENT_STATE = State.MENU; })
+    .onComplete(function() { 
+      CURRENT_STATE = State.MENU; 
+    })
     .start();
-  setOpacity(1);  
+  setOpacity(1);
 };
 
 async function setOpacity(op) {
   obj3d.traverse(function(o) {
     o.children.forEach(function(el) {
       if (el.material && el.material.transparent) {
-        new TWEEN.Tween(el.material).to({opacity: op}, 300)
+        new TWEEN.Tween(el.material).to({opacity: op}, 400)
           .easing(TWEEN.Easing.Quintic.Out)
           .start();
       } else {
         let elmats = el.material.materials;
         for (let i = 0; i < elmats.length; i++) {
-          new TWEEN.Tween(elmats[i]).to({opacity: op}, 360)
+          new TWEEN.Tween(elmats[i]).to({opacity: op}, 460)
             .easing(TWEEN.Easing.Quintic.Out)
             .start();
         }
@@ -274,12 +276,14 @@ function loadPageContent() {
     var scr = document.createElement('script');
     scr.src = 'assets/scripts/flicker.js';
     page.appendChild(scr);
+    toggleContent();
   });
 };
 
 function destroyPageContent() {
   var page = document.querySelector('#pageContent');
   page.parentNode.removeChild(page);
+  toggleContent();
 };
 
 //--------------------------------------------------------------------------------------------------
