@@ -53,7 +53,7 @@
   flex: 4;
   box-sizing: border-box;
   width: 100%;
-  margin: 30px 0;
+  margin: 20px 0;
   z-index: 1110;
 }
 
@@ -72,7 +72,7 @@
 .row > div {
   height: 100%;
   flex: 1;
-  margin: 0 30px;
+  margin: 0 20px;
   z-index: 1111;
 }
 
