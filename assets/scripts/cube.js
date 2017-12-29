@@ -273,9 +273,9 @@ function loadPageContent() {
   }
   fetch(url).then(data => data.text()).then(data => {
     document.querySelector('#pageContent').innerHTML = data;
-    var scr = document.createElement('script');
-    scr.src = 'assets/scripts/flicker.js';
-    page.appendChild(scr);
+    // var scr = document.createElement('script');
+    // scr.src = 'assets/scripts/flicker.js';
+    // page.appendChild(scr);
     toggleContent();
   });
 };
