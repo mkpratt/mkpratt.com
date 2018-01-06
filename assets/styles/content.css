@@ -1,14 +1,17 @@
 .bg {
   height: 120%;
-  width: 100%;
+  /* width set dynamically based on window size */
   position: absolute;
   top: -10%;
   background-color: #3f2537;
   will-change: transform;
   
-  -webkit-transform: skewX(-23deg) translateX(30%);
-  -ms-transform: skewX(-23deg) translateX(30%);
-  transform: skewX(-23deg) translateX(30%);
+  -webkit-transform: skewX(-23deg);
+  -ms-transform: skewX(-23deg);
+  transform: skewX(-23deg);
+
+  /* inherently has no transition */
+  transition: none;
 
   -webkit-box-shadow: 0px 0px 88px 5px rgba(0,0,0,0.93);
   -moz-box-shadow: 0px 0px 88px 5px rgba(0,0,0,0.93);
@@ -17,26 +20,60 @@
   z-index: 1000;
 }
 
-.animating {
-  -webkit-transition: all 480ms cubic-bezier(0.230, 1.000, 0.320, 1.000); 
-  -moz-transition: all 480ms cubic-bezier(0.230, 1.000, 0.320, 1.000); 
-  -o-transition: all 480ms cubic-bezier(0.230, 1.000, 0.320, 1.000); 
-  transition: all 480ms cubic-bezier(0.230, 1.000, 0.320, 1.000);
+/* NEED? */
+/* .detailed-view {
+  width: 100vw !important;
+  box-sizing: border-box;
+  transform: skewX(0deg) translateX(0px) !important;
+  / need to fix this padding for dynamic window sizes /
+  padding: 10% 25%;
+} */
+
+.details-wrapper {
+  color: #fff;
 }
 
-.view-content.animating {
+.details-wrapper > * {
+  opacity: 0;
+}
+
+.background-animating {
+  -webkit-transition: all 320ms cubic-bezier(0.230, 1.000, 0.320, 1.000) 480ms; 
+  -moz-transition: all 320ms cubic-bezier(0.230, 1.000, 0.320, 1.000) 480ms; 
+  -o-transition: all 320ms cubic-bezier(0.230, 1.000, 0.320, 1.000) 480ms; 
+  transition: all 320ms cubic-bezier(0.230, 1.000, 0.320, 1.000) 480ms;
+}
+
+.open.background-animating {
   -webkit-transition: all 320ms cubic-bezier(0.230, 1.000, 0.320, 1.000); 
   -moz-transition: all 320ms cubic-bezier(0.230, 1.000, 0.320, 1.000); 
   -o-transition: all 320ms cubic-bezier(0.230, 1.000, 0.320, 1.000); 
   transition: all 320ms cubic-bezier(0.230, 1.000, 0.320, 1.000);
 }
 
-.content {
+.background-animating-slow {
+  -webkit-transition: all 600ms cubic-bezier(0.230, 1.000, 0.320, 1.000) 480ms; 
+  -moz-transition: all 600ms cubic-bezier(0.230, 1.000, 0.320, 1.000) 480ms; 
+  -o-transition: all 600ms cubic-bezier(0.230, 1.000, 0.320, 1.000) 480ms; 
+  transition: all 600ms cubic-bezier(0.230, 1.000, 0.320, 1.000) 480ms;
+}
+
+.projects {
   width: 100%;
+  min-width: 1435px;
   height: 100%;
   display: flex;
   flex-direction: column;
   z-index: 1100;
+}
+
+.project-details {
+  height: 100vh;
+  width: 100vw;
+  position: absolute;
+  z-index: 1000;
+  padding: 10% 25%;
+  box-sizing: border-box;
 }
 
 .row {
@@ -47,15 +84,53 @@
   width: 100%;
   height: auto;
   margin: 20px 0;
+  will-change: left, opacity;
   z-index: 1110;
+  /* hidden at the start */
+  opacity: 0;
+  position: relative;
+  left: 200px;
+}
+
+.view-projects .row {
+  opacity: 1;
+  left: 0px;
 }
 
 .row:first-child {
   padding: 0 140px 0 0;
 }
 
+.projects-animating .row:first-child {
+  -webkit-transition: all 320ms cubic-bezier(0.230, 1.000, 0.320, 1.000) 320ms; 
+  -moz-transition: all 320ms cubic-bezier(0.230, 1.000, 0.320, 1.000) 320ms; 
+  -o-transition: all 320ms cubic-bezier(0.230, 1.000, 0.320, 1.000) 320ms; 
+  transition: all 320ms cubic-bezier(0.230, 1.000, 0.320, 1.000) 320ms;
+}
+
+.view-projects.projects-animating .row:first-child {
+  -webkit-transition: all 480ms cubic-bezier(0.230, 1.000, 0.320, 1.000) 240ms; 
+  -moz-transition: all 480ms cubic-bezier(0.230, 1.000, 0.320, 1.000) 240ms; 
+  -o-transition: all 480ms cubic-bezier(0.230, 1.000, 0.320, 1.000) 240ms; 
+  transition: all 480ms cubic-bezier(0.230, 1.000, 0.320, 1.000) 240ms;
+}
+
 .row:nth-child(2) {
   padding: 0 90px 0 110px;
+}
+
+.projects-animating .row:nth-child(2) {
+  -webkit-transition: all 320ms cubic-bezier(0.230, 1.000, 0.320, 1.000) 240ms; 
+  -moz-transition: all 320ms cubic-bezier(0.230, 1.000, 0.320, 1.000) 240ms; 
+  -o-transition: all 320ms cubic-bezier(0.230, 1.000, 0.320, 1.000) 240ms; 
+  transition: all 320ms cubic-bezier(0.230, 1.000, 0.320, 1.000) 240ms;
+}
+
+.view-projects.projects-animating .row:nth-child(2) {
+  -webkit-transition: all 480ms cubic-bezier(0.230, 1.000, 0.320, 1.000) 320ms; 
+  -moz-transition: all 480ms cubic-bezier(0.230, 1.000, 0.320, 1.000) 320ms; 
+  -o-transition: all 480ms cubic-bezier(0.230, 1.000, 0.320, 1.000) 320ms; 
+  transition: all 480ms cubic-bezier(0.230, 1.000, 0.320, 1.000) 320ms;
 }
 
 .row:last-child {
@@ -63,21 +138,80 @@
   padding: 0 20px 0 240px;
 }
 
+.projects-animating .row:last-child {
+  -webkit-transition: all 480ms cubic-bezier(0.230, 1.000, 0.320, 1.000); 
+  -moz-transition: all 480ms cubic-bezier(0.230, 1.000, 0.320, 1.000); 
+  -o-transition: all 480ms cubic-bezier(0.230, 1.000, 0.320, 1.000); 
+  transition: all 480ms cubic-bezier(0.230, 1.000, 0.320, 1.000);
+}
+
+.view-projects.projects-animating .row:last-child {
+  -webkit-transition: all 480ms cubic-bezier(0.230, 1.000, 0.320, 1.000) 480ms; 
+  -moz-transition: all 480ms cubic-bezier(0.230, 1.000, 0.320, 1.000) 480ms; 
+  -o-transition: all 480ms cubic-bezier(0.230, 1.000, 0.320, 1.000) 480ms; 
+  transition: all 480ms cubic-bezier(0.230, 1.000, 0.320, 1.000) 480ms;
+}
+
 .row > div {
+  position: relative;
   height: 100%;
   margin: 0 20px;
   z-index: 1111;
   box-sizing: border-box;
+  cursor: pointer;
+  background-color: #131D29;
+
+  -webkit-box-shadow: 0px 10px 38px -1px rgba(0,0,0,0.5);
+  -moz-box-shadow: 0px 10px 38px -1px rgba(0,0,0,0.5);
+  box-shadow: 0px 10px 38px -1px rgba(0,0,0,0.5);
 }
 
-.row:first-child > div {
-  background-color: red;
+.row > div > img {
+  width: 100%; 
+  height: 100%;
+  object-fit: cover;
 }
 
-.row:nth-child(2) > div {
-  background-color: blue;
+.thumbnail {
+  z-index: 1;
 }
 
-.row:last-child > div {
-  background-color: yellow;
+.thumbnail-overlay {
+  position: absolute;
+  top: 0;
+  width: 100%; 
+  height: 100%;
+  background-image: url("../images/dark.png");
+  background-repeat: repeat;
+  z-index: 2;
+}
+
+.text-wrapper {
+  position: absolute;
+  top: 0;
+  color: #fff;
+  padding: 0 20px;
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 3;
+}
+
+.text-wrapper > p {
+  font-size: 20px;
+}
+
+.on {
+  animation: flicker 1.8s forwards;
+}
+
+@keyframes flicker
+{
+  0% { opacity: 0; }
+  9% { opacity: 0; }
+  10% { opacity: .5; }
+  13% { opacity: 0; }
+  20% { opacity: .5; }
+  25% { opacity: 1; }
+  100% { opacity: 1; }
 }

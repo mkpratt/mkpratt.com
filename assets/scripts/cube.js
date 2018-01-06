@@ -1,7 +1,9 @@
 // TODO:
 //  Page content
-//  Page font
 //  Live gradient in background?
+//  Post-Processing Light and Ambient effects (unreal bloom?)
+//  Post-Processing DOF effects
+//  Light flare overlay (animated?)
 
 'use strict';
 
@@ -24,10 +26,13 @@ const Direction = {
 
 var CURRENT_STATE = State.MENU;
 
-var camera, spotLight;
-var scene, renderer;
+var camera, tinyCamera;
+var scene, tinyScene;
 
-var cube, frontend, backend, design, me;
+var mainRenderer, tinyRenderer;
+
+var spotLight;
+var cube, tinyCube, frontend, backend, design, me;
 var rad90 = Math.PI / 2;
 
 var textureLoader, jsonLoader;
@@ -45,15 +50,36 @@ var html = document.querySelector('html');
 //--------------------------------------------------------------------------------------------------
 
 function init() {
+  // USE THIS FOR LOADING THE PAGE
+  //var loadingManager = new THREE.LoadingManager( function(){
+  //  terrain.visible = true;
+  //});
+
   textureLoader = new THREE.TextureLoader();
   jsonLoader = new THREE.JSONLoader();
 
-  // CAMERA
+  var width = window.innerWidth;
+  var height = window.innerHeight;
+
+  // CAMERAS
   camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 1, 1000);
   camera.position.z = 700;
+  
+  tinyCamera = new THREE.PerspectiveCamera(35, 1, 1, 64);
+  tinyCamera.position.z = 32;
 
-  // SCENE
+  // SCENES
   scene = new THREE.Scene();
+  // create scene fog for atmosphere?
+  tinyScene = new THREE.Scene();
+
+  let tinyTexture = textureLoader.load('assets/textures/tiny-cube.png');
+  let tinyGeometry = new THREE.BoxBufferGeometry(13, 13, 13);
+  let tinyMaterial = new THREE.MeshBasicMaterial({ map: tinyTexture });
+  tinyCube = new THREE.Mesh(tinyGeometry, tinyMaterial);
+  tinyCube.name = 'tinyCube';
+  tinyScene.add(tinyCube);
+
   obj3d = new THREE.Object3D();
 
   scene.add(new THREE.HemisphereLight(0x443333, 0x111122));
@@ -86,6 +112,7 @@ function init() {
   cube.name = 'cube';
   obj3d.add(cube);
 
+  // BLENDER Models
   loadJson('triangle', frontend, 0, 16, 100, rad90, -2.095, 0, 94, 'frontend');
   loadJson('circle', backend, 100, 1, 0, rad90-0.56, 0, -rad90, 72, 'backend');
   loadJson('pentagon', design, -100, -5, 0, rad90, 0, rad90, 80, 'design');
@@ -93,15 +120,25 @@ function init() {
 
   scene.add(obj3d);
 
+  // RAYCASTER
   raycaster = new THREE.Raycaster();
 
-  renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-  renderer.setPixelRatio(window.devicePixelRatio);
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.domElement.style.position = 'absolute';
-  renderer.domElement.style.top = 0;
-  renderer.domElement.style.zIndex = 100;
-  document.body.appendChild(renderer.domElement);
+  // RENDERERS
+  mainRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  mainRenderer.setPixelRatio(window.devicePixelRatio);
+  mainRenderer.setSize(window.innerWidth, window.innerHeight);
+  mainRenderer.domElement.style.position = 'absolute';
+  mainRenderer.domElement.style.top = 0;
+  mainRenderer.domElement.style.zIndex = 100;
+  document.body.appendChild(mainRenderer.domElement);
+
+  tinyRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  tinyRenderer.setClearColor(0x000000, 0);
+  tinyRenderer.setPixelRatio(window.devicePixelRatio);
+  tinyRenderer.setSize(64, 64);
+  tinyRenderer.domElement.id = 'tinyRender';
+  tinyRenderer.domElement.classList.add('tinycv', 'hidden');
+  document.body.appendChild(tinyRenderer.domElement);
 
   // EVENT LISTENERS
   window.addEventListener('resize', onWindowResize, false);
@@ -121,7 +158,10 @@ function init() {
 async function loadJson(shape, obj, posx, posy, posz, rotx, roty, rotz, scale, name) {
   jsonLoader.load('assets/scripts/models/' + shape + '.js', function(g) {
     obj = new THREE.Mesh(g, new THREE.MeshPhongMaterial({ shininess: 100, map: textureLoader.load('assets/textures/uv_' + shape + '.png'), transparent: true }));
-    obj.position.set(posx,posy,posz); obj.rotation.set(rotx,roty,rotz); obj.scale.set(scale,scale,scale); obj.name = name; obj3d.add(obj);
+    obj.position.set(posx,posy,posz); 
+    obj.rotation.set(rotx,roty,rotz); 
+    obj.scale.set(scale,scale,scale); 
+    obj.name = name; obj3d.add(obj);
   });
 };
 
@@ -132,17 +172,20 @@ async function loadJson(shape, obj, posx, posy, posz, rotx, roty, rotz, scale, n
 function animate() {
   requestAnimationFrame(animate);
   if (CURRENT_STATE !== State.ROTATING) {
-    // t += 0.0015; 
-    // csin = 0.24 * Math.sin(t);
-    // // Image Positions
-    // star1.style.transform = 'matrix3d(1,0,0.00,0,0.00,1,0.00,0,0,0,1,0,' + (csin * 175) + ',0,0,1)';
-    // neb1.style.transform = 'matrix3d(1,0,0.00,0,0.00,1,0.00,0,0,0,1,0,' + (csin * 150) + ',0,0,1)';
-    // star2.style.transform = 'matrix3d(1,0,0.00,0,0.00,1,0.00,0,0,0,1,0,' + (csin * 200) + ',0,0,1)';
-    // neb2.style.transform = 'matrix3d(1,0,0.00,0,0.00,1,0.00,0,0,0,1,0,' + (csin * 500) + ',0,0,1)';
-    // star3.style.transform = 'matrix3d(1,0,0.00,0,0.00,1,0.00,0,0,0,1,0,' + (csin * 625) + ',0,0,1)';
-    // star4.style.transform = 'matrix3d(1,0,0.00,0,0.00,1,0.00,0,0,0,1,0,' + (csin * 950) + ',0,0,1)';
-    // // Object Rotation
-    // obj3d.rotation.y = csin + rotYOffset;
+    t += 0.0015; 
+    csin = 0.24 * Math.sin(t);
+    // Image Positions
+    star1.style.transform = 'matrix3d(1,0,0.00,0,0.00,1,0.00,0,0,0,1,0,' + (csin * 175) + ',0,0,1)';
+    // CHANGE NEBULA's TO BE BOTH BACKGROUND IMAGES AND UPDATE THE BACKGROUND POSITION (this will allow for blend mode 'multiply' i think)
+    neb1.style.transform = 'matrix3d(1,0,0.00,0,0.00,1,0.00,0,0,0,1,0,' + (csin * 150) + ',0,0,1)';
+    star2.style.transform = 'matrix3d(1,0,0.00,0,0.00,1,0.00,0,0,0,1,0,' + (csin * 200) + ',0,0,1)';
+    neb2.style.transform = 'matrix3d(1,0,0.00,0,0.00,1,0.00,0,0,0,1,0,' + (csin * 500) + ',0,0,1)';
+    star3.style.transform = 'matrix3d(1,0,0.00,0,0.00,1,0.00,0,0,0,1,0,' + (csin * 625) + ',0,0,1)';
+    star4.style.transform = 'matrix3d(1,0,0.00,0,0.00,1,0.00,0,0,0,1,0,' + (csin * 950) + ',0,0,1)';
+    // Object Rotation
+    obj3d.rotation.y = csin + rotYOffset;
+    // Tiny Cube Rotation
+    tinyCube.rotation.y += 0.005;
   }
   render();
 };
@@ -151,15 +194,20 @@ function render() {
   TWEEN.update();
   raycaster.setFromCamera(mouse, camera);
   var intersects = raycaster.intersectObjects(obj3d.children);
-  if (intersects.length > 0 && intersects[0].object.name !== 'cube') {
+  if (intersects.length > 0 && intersects[0].object.name !== 'cube' && !projectsVisible) {
     // TODO: Don't make the cursor a pointer if it's not the current page object
+    //       Don't make the html object a cursor pointer, only on the 3d object itself
     html.style.cursor = 'pointer';
     INTERSECTED = intersects[0].object;
   } else {
-    if (html.style.cursor !== 'default') html.style.cursor = 'default';
-    INTERSECTED = null;
+    if (html.style.cursor !== 'default') {
+      html.style.cursor = 'default';
+      INTERSECTED = null;
+    }
   }
-  renderer.render(scene, camera);
+
+  mainRenderer.render(scene, camera);
+  tinyRenderer.render(tinyScene, tinyCamera);
 };
 
 //--------------------------------------------------------------------------------------------------
@@ -180,7 +228,7 @@ function left() {
 
 function right() {
   CURRENT_STATE = State.ROTATING;
-  new TWEEN.Tween(obj3d.rotation).to({ y: obj3d.rotation.y - rad90, }, 680)
+  new TWEEN.Tween(obj3d.rotation).to({ y: obj3d.rotation.y - rad90 }, 680)
     .easing(TWEEN.Easing.Quintic.Out)
     .onComplete(function() { 
       CURRENT_STATE = State.MENU; 
@@ -216,35 +264,42 @@ function focus() {
     .easing(TWEEN.Easing.Quintic.Out)
     .onComplete(function() { 
       CURRENT_STATE = State.PAGE;
-      loadPageContent(); 
+      showBackground();
+      loadProjects(); 
     })
     .start();
-  setOpacity(0);  
+  // FIX OPACITY FADE OUT TO HAVE bg COME IN SOONER
+  setOpacity(0, false);  
 };
 
 function destroy() {
-  destroyPageContent();
+  destroyProjects();
   CURRENT_STATE = State.FOCUSING;
   new TWEEN.Tween(camera.position).to({ z: 700 }, 480)
     .easing(TWEEN.Easing.Quintic.Out)
     .onComplete(function() { 
       CURRENT_STATE = State.MENU; 
     })
+    .delay(480)
     .start();
-  setOpacity(1);
+  setOpacity(1, true);
 };
 
-async function setOpacity(op) {
+async function setOpacity(op, delay) {
+  // FIX OPACITY FADE IN
+  if (delay) {
+    setTimeout(480);
+  }
   obj3d.traverse(function(o) {
     o.children.forEach(function(el) {
       if (el.material && el.material.transparent) {
-        new TWEEN.Tween(el.material).to({opacity: op}, 400)
+        new TWEEN.Tween(el.material).to({ opacity: op }, 400)
           .easing(TWEEN.Easing.Quintic.Out)
           .start();
       } else {
         let elmats = el.material.materials;
         for (let i = 0; i < elmats.length; i++) {
-          new TWEEN.Tween(elmats[i]).to({opacity: op}, 460)
+          new TWEEN.Tween(elmats[i]).to({ opacity: op }, 460)
             .easing(TWEEN.Easing.Quintic.Out)
             .start();
         }
@@ -253,37 +308,44 @@ async function setOpacity(op) {
   });
 };
 
+async function showTinyCube() {
+  tinyRenderer.domElement.classList.remove('hidden');
+  tinyRenderer.domElement.classList.add('visible');
+  tinyRenderer.domElement.addEventListener('click', function _func() {
+    destroy();
+    tinyRenderer.domElement.removeEventListener('click', _func);
+  });
+};
+
+async function hideTinyCube() {
+  tinyRenderer.domElement.classList.remove('visible');
+  tinyRenderer.domElement.classList.add('hidden');
+};
+
 //--------------------------------------------------------------------------------------------------
 // Loading / Removing Content
 //--------------------------------------------------------------------------------------------------
 
-function loadPageContent() {
-  var page = document.createElement('div');
-  page.id = 'pageContent';
-  var body = document.querySelector('body');
-  body.appendChild(page);
-  
-  var url = window.location.href + 'views/';
+function loadProjects() {
+  let url = window.location.href + 'assets/scripts/content/';
   switch (CURRENT_PAGE) {
-    case 1: url += 'frontend.html'; break;
-    case 2: url += 'backend.html'; break;
-    case 3: url += 'me.html'; break;
-    case 4: url += 'design.html'; break;
+    case 1: url += 'frontend.json'; break;
+    case 2: url += 'backend.json'; break;
+    case 3: url += 'me.json'; break;
+    case 4: url += 'design.json'; break;
     default: break;
   }
-  fetch(url).then(data => data.text()).then(data => {
-    document.querySelector('#pageContent').innerHTML = data;
-    // var scr = document.createElement('script');
-    // scr.src = 'assets/scripts/flicker.js';
-    // page.appendChild(scr);
-    toggleContent();
+
+  loadProjectJSON(url, function() {
+    showProjects();
+    showTinyCube();
   });
 };
 
-function destroyPageContent() {
-  var page = document.querySelector('#pageContent');
-  page.parentNode.removeChild(page);
-  toggleContent();
+function destroyProjects() {
+  hideProjects();
+  hideBackground();
+  hideTinyCube();
 };
 
 //--------------------------------------------------------------------------------------------------
@@ -291,9 +353,11 @@ function destroyPageContent() {
 //--------------------------------------------------------------------------------------------------
 
 function onWindowResize() {
-  camera.aspect = window.innerWidth / window.innerHeight;
+  let width = window.innerWidth;
+  let height = window.innerHeight;
+  camera.aspect = width / height;
   camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
+  mainRenderer.setSize(width, height);
 };
 
 // Raycaster
@@ -306,11 +370,9 @@ function onDocumentMouseMove(event) {
 // 3D object clicks
 function onDocumentMouseClick(event) {
   event.preventDefault();
-  if (INTERSECTED) {
+  // FIX THIS
+  if (INTERSECTED && !projectsVisible) {
     switch (INTERSECTED.name) {
-      case 'initBtn':
-        up();
-        break;
       case 'frontend':
       case 'backend':
       case 'design':
@@ -325,7 +387,7 @@ function onDocumentMouseClick(event) {
 
 // Keyboard input
 function onDocumentKeyDown(event) {
-  var keyCode = event.which;
+  let keyCode = event.which;
   if (keyCode !== 37 && keyCode !== 39 && keyCode !== 187 && keyCode !== 189) return;
   switch (CURRENT_STATE) {
     case State.MENU:
@@ -346,7 +408,7 @@ function ready() {
   animate()
 };
 // DOM ready
-if (document.attachEvent ? document.readyState === 'complete' : document.readyState !== 'loading'){
+if (document.attachEvent ? document.readyState === 'complete' : document.readyState !== 'loading') {
   ready();
 } else {
   document.addEventListener('DOMContentLoaded', ready);

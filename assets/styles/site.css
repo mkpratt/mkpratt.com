@@ -1,3 +1,8 @@
+@font-face {
+  font-family: United;
+  src: url(../fonts/UnitedSansRgHv.otf);
+}
+
 html {
   height: 100%;
   width: 100%;
@@ -11,52 +16,45 @@ body {
   background: radial-gradient(#0F1720, #131D29);
   margin: 0px;
   overflow: hidden;
-  font-family: Verdana, Geneva, sans-serif;
+  font-family: United, Verdana, Geneva, sans-serif;
 }
 
-#pageContent {
+.tinycv {
   position: absolute;
-  color: white;
-  top: 0px;
-  max-height: 100vh;
+  top: 50px;
+  left: 200px;
+  z-index: 200;
+  
+  -webkit-transition: all 480ms cubic-bezier(0.230, 1.000, 0.320, 1.000); 
+  -moz-transition: all 480ms cubic-bezier(0.230, 1.000, 0.320, 1.000); 
+  -o-transition: all 480ms cubic-bezier(0.230, 1.000, 0.320, 1.000); 
+  transition: all 480ms cubic-bezier(0.230, 1.000, 0.320, 1.000);
+}
+
+.hidden {
+  opacity: 0;
+  cursor: auto;
+
+  -webkit-transition-delay: 480ms;
+  -moz-transition-delay: 480ms;
+  -o-transition-delay: 480ms;
+  transition-delay: 480ms; 
+}
+
+.visible {
+  opacity: 1;
+  left: 50px;
+  cursor: pointer;
+}
+
+.leak {
+  height: 100vh;
+  width: 100vw;
   overflow: hidden;
-  z-index: 1000;
-}
-
-h1 {
-  margin: 50px;
-}
-
-p {
-  margin: 50px;
-  font-size: 20px;
-}
-
-#left {
-  width: 100px;
-  height: 100px;
-  background-color: red;
-  color: blue;
   position: absolute;
-  top: 40%;
-  left: 20%;
-}
-
-#left:hover {
-  cursor: pointer;
-}
-
-#right {
-  width: 100px;
-  height: 100px;
-  background-color: red;
-  color: blue;
-  position: absolute;
-  top: 40%;
-  right: 20%;
-  cursor: pointer;
-}
-
-#right:hover {
-  cursor: pointer;
+  z-index: 10000;
+  background-image: url("../images/leakf.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }

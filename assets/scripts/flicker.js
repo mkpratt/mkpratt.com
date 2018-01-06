@@ -1,7 +1,7 @@
 'use strict';
 
 (function() {
-  var segments = document.querySelector('#main').children;
+  var segments = document.querySelector('#detailsWrapper').children;
   var arr = [];
   for (let i = 0; i < segments.length; i++) {
     arr.push(i);
