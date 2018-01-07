@@ -16,7 +16,7 @@ document.body.appendChild(bg);
 
 let pw = document.createElement('div');
 pw.id = 'projectsWrapper';
-pw.style.transform = 'translateX(500px)';
+pw.style.transform = 'translateX(50000px)';
 pw.style.position = 'absolute';
 pw.style.zIndex = '2000';
 pw.addEventListener('transitionend', function onTransitionEnd() {
@@ -43,6 +43,7 @@ function hideBackground() {
 
 // Projects functions
 function showProjects() {
+  pw.style.transform = 'translateX(500px)';
   projectsVisible = true;
   pw.classList.add('projects-animating');
   pw.classList.add('view-projects');
@@ -50,6 +51,10 @@ function showProjects() {
 function hideProjects() {
   projectsVisible = false;
   pw.classList.add('projects-animating');
+  pw.addEventListener('transitionend', function _func() {
+    pw.style.transform = 'translateX(50000px)';
+    pw.removeEventListener('transitionend', _func);
+  });
   pw.classList.remove('view-projects');
 };
 
@@ -63,7 +68,7 @@ function showDetails() {
     bg.classList.remove('showing-details');
     bg.classList.add('detailed-view');
     bg.removeEventListener('transitionend', _func);
-    pw.style.display = 'none';
+    //pw.style.display = 'none';
     // flicker animation to "turn on" the content
     var scr = document.createElement('script');
     scr.src = 'assets/scripts/flicker.js';
@@ -76,7 +81,7 @@ function hideDetails() {
   bg.innerHTML = '';
   bg.classList.remove('detailed-view');
   bg.classList.add('hiding-details');
-  pw.style.display = 'inline';
+  //pw.style.display = 'inline';
   document.body.removeChild(document.querySelector('#projectDetails'));
 
   bg.addEventListener('transitionend', function _func() {

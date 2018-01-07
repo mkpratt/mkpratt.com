@@ -1,5 +1,5 @@
 // TODO:
-//  Page content
+//  Project details
 //  Live gradient in background?
 //  Post-Processing Light and Ambient effects (unreal bloom?)
 //  Post-Processing DOF effects
@@ -11,6 +11,7 @@
 // Globals / Instantiation
 //--------------------------------------------------------------------------------------------------
 
+// UPDATE THIS TO ACCOUNT FOR MORE STATES
 const State = {
   INIT: Symbol('INIT'),
   MENU: Symbol('MENU'),
@@ -194,7 +195,7 @@ function render() {
   TWEEN.update();
   raycaster.setFromCamera(mouse, camera);
   var intersects = raycaster.intersectObjects(obj3d.children);
-  if (intersects.length > 0 && intersects[0].object.name !== 'cube' && !projectsVisible) {
+  if (intersects.length > 0 && intersects[0].object.name !== 'cube' && CURRENT_STATE === State.MENU) {
     // TODO: Don't make the cursor a pointer if it's not the current page object
     //       Don't make the html object a cursor pointer, only on the 3d object itself
     html.style.cursor = 'pointer';
@@ -339,6 +340,7 @@ function loadProjects() {
   loadProjectJSON(url, function() {
     showProjects();
     showTinyCube();
+    CURRENT_STATE = State.PAGE;
   });
 };
 
@@ -346,6 +348,7 @@ function destroyProjects() {
   hideProjects();
   hideBackground();
   hideTinyCube();
+  CURRENT_STATE = State.MENU;
 };
 
 //--------------------------------------------------------------------------------------------------
@@ -371,7 +374,7 @@ function onDocumentMouseMove(event) {
 function onDocumentMouseClick(event) {
   event.preventDefault();
   // FIX THIS
-  if (INTERSECTED && !projectsVisible) {
+  if (INTERSECTED && CURRENT_STATE === State.MENU) {
     switch (INTERSECTED.name) {
       case 'frontend':
       case 'backend':
