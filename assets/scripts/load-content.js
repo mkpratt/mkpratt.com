@@ -24,8 +24,6 @@ function loadProjectContent(callback) {
         container.id = 'projectDetails';
         container.classList.add('project-details');
 
-        //let container = document.querySelector('#bg');
-
         // fill in detailed content
         template = template.replace(/{{name}}/g, content["name"])
                            .replace(/{{short-description}}/g, content["short-description"])

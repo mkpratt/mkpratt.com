@@ -13,9 +13,9 @@
 
 // UPDATE THIS TO ACCOUNT FOR MORE STATES
 const State = {
-  INIT: Symbol('INIT'),
-  MENU: Symbol('MENU'),
-  PAGE: Symbol('PAGE'),
+  MAIN: Symbol('MAIN'),
+  PROJECTSOVERVIEW: Symbol('PROJECTSOVERVIEW'),
+  PROJECTDETAILS: Symbol('PROJECTDETAILS'),
   ROTATING: Symbol('ROTATING'),
   FOCUSING: Symbol('FOCUSING')
 };
@@ -25,7 +25,7 @@ const Direction = {
   LEFT: Symbol('L')
 };
 
-var CURRENT_STATE = State.MENU;
+var CURRENT_STATE = State.MAIN;
 
 var camera, tinyCamera;
 var scene, tinyScene;
@@ -39,7 +39,7 @@ var rad90 = Math.PI / 2;
 var textureLoader, jsonLoader;
 var obj3d;
 
-var neb1, neb2, star1, star2, star3, star4;
+var neb, star1, star2, star3, star4;
 
 var rotYOffset = 0, rotZOffset = 0, t = 0, csin;
 
@@ -148,8 +148,8 @@ function init() {
   document.addEventListener('keydown', onDocumentKeyDown, false);
 
   // IMAGE ELEMENTS
-  neb1 = document.getElementById('nebula1');
-  neb2 = document.getElementById('nebula2');
+  neb = document.getElementById('nebulae');
+  //neb2 = document.getElementById('nebula2');
   star1 = document.getElementById('stars1');
   star2 = document.getElementById('stars2');
   star3 = document.getElementById('stars3');
@@ -177,10 +177,9 @@ function animate() {
     csin = 0.24 * Math.sin(t);
     // Image Positions
     star1.style.transform = 'matrix3d(1,0,0.00,0,0.00,1,0.00,0,0,0,1,0,' + (csin * 175) + ',0,0,1)';
-    // CHANGE NEBULA's TO BE BOTH BACKGROUND IMAGES AND UPDATE THE BACKGROUND POSITION (this will allow for blend mode 'multiply' i think)
-    neb1.style.transform = 'matrix3d(1,0,0.00,0,0.00,1,0.00,0,0,0,1,0,' + (csin * 150) + ',0,0,1)';
     star2.style.transform = 'matrix3d(1,0,0.00,0,0.00,1,0.00,0,0,0,1,0,' + (csin * 200) + ',0,0,1)';
-    neb2.style.transform = 'matrix3d(1,0,0.00,0,0.00,1,0.00,0,0,0,1,0,' + (csin * 500) + ',0,0,1)';
+    neb.style.backgroundPosition = (25 + (70 * csin)) + '% 0%, ' + (100 - (70 * csin)) + '% 0%';
+    //console.log((25 + (70 * -csin)) + '% 0%, ' + (100 + (70 * csin)) + '% 0%');
     star3.style.transform = 'matrix3d(1,0,0.00,0,0.00,1,0.00,0,0,0,1,0,' + (csin * 625) + ',0,0,1)';
     star4.style.transform = 'matrix3d(1,0,0.00,0,0.00,1,0.00,0,0,0,1,0,' + (csin * 950) + ',0,0,1)';
     // Object Rotation
@@ -195,7 +194,7 @@ function render() {
   TWEEN.update();
   raycaster.setFromCamera(mouse, camera);
   var intersects = raycaster.intersectObjects(obj3d.children);
-  if (intersects.length > 0 && intersects[0].object.name !== 'cube' && CURRENT_STATE === State.MENU) {
+  if (intersects.length > 0 && intersects[0].object.name !== 'cube' && CURRENT_STATE === State.MAIN) {
     // TODO: Don't make the cursor a pointer if it's not the current page object
     //       Don't make the html object a cursor pointer, only on the 3d object itself
     html.style.cursor = 'pointer';
@@ -220,7 +219,7 @@ function left() {
   new TWEEN.Tween(obj3d.rotation).to({ y: obj3d.rotation.y + rad90 }, 680)
     .easing(TWEEN.Easing.Quintic.Out)
     .onComplete(function() { 
-      CURRENT_STATE = State.MENU; 
+      CURRENT_STATE = State.MAIN; 
       rotYOffset += rad90;
       updatePage(Direction.LEFT);
     })
@@ -232,7 +231,7 @@ function right() {
   new TWEEN.Tween(obj3d.rotation).to({ y: obj3d.rotation.y - rad90 }, 680)
     .easing(TWEEN.Easing.Quintic.Out)
     .onComplete(function() { 
-      CURRENT_STATE = State.MENU; 
+      CURRENT_STATE = State.MAIN; 
       rotYOffset -= rad90;
       updatePage(Direction.RIGHT);
     })
@@ -264,13 +263,13 @@ function focus() {
   new TWEEN.Tween(camera.position).to({ z: 1000 }, 480)
     .easing(TWEEN.Easing.Quintic.Out)
     .onComplete(function() { 
-      CURRENT_STATE = State.PAGE;
+      CURRENT_STATE = State.PROJECTSOVERVIEW;
       showBackground();
       loadProjects(); 
     })
     .start();
   // FIX OPACITY FADE OUT TO HAVE bg COME IN SOONER
-  setOpacity(0, false);  
+  setOpacity(0);  
 };
 
 function destroy() {
@@ -279,17 +278,22 @@ function destroy() {
   new TWEEN.Tween(camera.position).to({ z: 700 }, 480)
     .easing(TWEEN.Easing.Quintic.Out)
     .onComplete(function() { 
-      CURRENT_STATE = State.MENU; 
+      CURRENT_STATE = State.MAIN; 
     })
     .delay(480)
     .start();
-  setOpacity(1, true);
+    setTimeout(function() {
+      setOpacity(1);
+    }, 480);
 };
 
-async function setOpacity(op, delay) {
+async function setOpacity(op) {
+  let nw = document.querySelector('#navWrapper');
   // FIX OPACITY FADE IN
-  if (delay) {
-    setTimeout(480);
+  if (op > 0) {
+    nw.style.opacity = '1';
+  } else {
+    nw.style.opacity = '0';
   }
   obj3d.traverse(function(o) {
     o.children.forEach(function(el) {
@@ -312,10 +316,11 @@ async function setOpacity(op, delay) {
 async function showTinyCube() {
   tinyRenderer.domElement.classList.remove('hidden');
   tinyRenderer.domElement.classList.add('visible');
-  tinyRenderer.domElement.addEventListener('click', function _func() {
+  tinyRenderer.domElement.addEventListener('click', function _func(event) {
     destroy();
     tinyRenderer.domElement.removeEventListener('click', _func);
-  });
+    //event.preventDefault();
+  }, false);
 };
 
 async function hideTinyCube() {
@@ -340,7 +345,7 @@ function loadProjects() {
   loadProjectJSON(url, function() {
     showProjects();
     showTinyCube();
-    CURRENT_STATE = State.PAGE;
+    CURRENT_STATE = State.PROJECTSOVERVIEW;
   });
 };
 
@@ -348,7 +353,7 @@ function destroyProjects() {
   hideProjects();
   hideBackground();
   hideTinyCube();
-  CURRENT_STATE = State.MENU;
+  CURRENT_STATE = State.MAIN;
 };
 
 //--------------------------------------------------------------------------------------------------
@@ -374,13 +379,17 @@ function onDocumentMouseMove(event) {
 function onDocumentMouseClick(event) {
   event.preventDefault();
   // FIX THIS
-  if (INTERSECTED && CURRENT_STATE === State.MENU) {
+  if (INTERSECTED && CURRENT_STATE === State.MAIN) {
     switch (INTERSECTED.name) {
       case 'frontend':
       case 'backend':
       case 'design':
       case 'me':
         focus();
+        // mainRenderer.domElement.addEventListener('click', function _func() {
+        //   destroy();
+        //   mainRenderer.domElement.removeEventListener('click', _func);
+        // });
         break;
       default:
         break;
@@ -393,12 +402,12 @@ function onDocumentKeyDown(event) {
   let keyCode = event.which;
   if (keyCode !== 37 && keyCode !== 39 && keyCode !== 187 && keyCode !== 189) return;
   switch (CURRENT_STATE) {
-    case State.MENU:
+    case State.MAIN:
       if (keyCode === 37) left();
       else if (keyCode === 39) right();
       else if (keyCode === 187) focus();
       break;
-    case State.PAGE:
+    case State.PROJECTSOVERVIEW:
       if (keyCode === 189) destroy();
       break;
     default: break;
@@ -408,7 +417,7 @@ function onDocumentKeyDown(event) {
 // Call when DOM ready
 function ready() {
   init();
-  animate()
+  animate();
 };
 // DOM ready
 if (document.attachEvent ? document.readyState === 'complete' : document.readyState !== 'loading') {

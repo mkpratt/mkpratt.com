@@ -1,26 +1,10 @@
-h1 {
-  opacity: 0;
+.lg-header {
+  font-size: 56px;
+}
+.md-header {
+  font-size: 22px;
 }
 
-p {
-  opacity: 0;
-}
-
-h1, p {
-  color: white;
-}
-
-.on {
-  animation: flicker 1.8s forwards;
-}
-
-@keyframes flicker
-{
-  0% { opacity: 0; }
-  9% { opacity: 0; }
-  10% { opacity: .5; }
-  13% { opacity: 0; }
-  20% { opacity: .5; }
-  25% { opacity: 1; }
-  100% { opacity: 1; }
+.pg {
+  line-height: 26px;
 }

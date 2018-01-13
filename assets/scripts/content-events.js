@@ -3,11 +3,12 @@
 //--------------------------------------------------------------------------------------------------
 
 var projectsVisible = false;
-var bgSkewOffset = (window.innerHeight) * Math.tan(getTanDeg(23));
+var bgSkewOffset = window.innerHeight * Math.tan(getTanDeg(23));
 let bg = document.createElement('div');
 bg.id = 'bg';
 bg.classList.add('bg');
-bg.style.width = window.innerWidth + (2 * bgSkewOffset) + 'px';
+// make it extra wide so we don't see overflow
+bg.style.width = window.innerWidth + (4 * bgSkewOffset) + 'px';
 bg.style.transform = 'skewX(-23deg) translateX(' + getBGOffset() + 'px)';
 bg.addEventListener('transitionend', function onTransitionEnd() {
   bg.classList.remove('background-animating', 'background-animating-slow');
@@ -60,6 +61,7 @@ function hideProjects() {
 
 // Project details functions
 function showDetails() {
+  CURRENT_STATE = State.PROJECTDETAILS;
   bg.classList.add('showing-details');
   bg.classList.add('background-animating-slow');
   hideProjects();
@@ -68,7 +70,6 @@ function showDetails() {
     bg.classList.remove('showing-details');
     bg.classList.add('detailed-view');
     bg.removeEventListener('transitionend', _func);
-    //pw.style.display = 'none';
     // flicker animation to "turn on" the content
     var scr = document.createElement('script');
     scr.src = 'assets/scripts/flicker.js';
@@ -78,10 +79,10 @@ function showDetails() {
   bg.style.transform = 'skewX(-23deg) translateX(' + -(bgSkewOffset) + 'px)';
 };
 function hideDetails() {
+  CURRENT_STATE = State.PROJECTSOVERVIEW;
   bg.innerHTML = '';
   bg.classList.remove('detailed-view');
   bg.classList.add('hiding-details');
-  //pw.style.display = 'inline';
   document.body.removeChild(document.querySelector('#projectDetails'));
 
   bg.addEventListener('transitionend', function _func() {
@@ -103,8 +104,10 @@ function getBGOffset() {
   return window.innerWidth + 20 + (window.innerHeight / 2 * Math.tan(getTanDeg(23)));
 };
 function calculateOffset() {
-  let xOffset = bg.classList.contains('open') ? 525 : getBGOffset();
-  bg.style.transform = 'skewX(-23deg) translateX(' + xOffset + 'px)';
+  if (CURRENT_STATE !== State.PROJECTDETAILS) {
+    let xOffset = bg.classList.contains('open') ? 525 : getBGOffset();
+    bg.style.transform = 'skewX(-23deg) translateX(' + xOffset + 'px)';
+  }
 };
 function getProjectsHeight() {
   return (window.innerHeight * .8);
@@ -144,7 +147,9 @@ function resizeProjects() {
 
 window.addEventListener('resize', function () {
   calculateOffset();
-  resizeProjects();
+  if (CURRENT_STATE === State.PROJECTSOVERVIEW) {
+    resizeProjects();
+  }
 });
 
 //--------------------------------------------------------------------------------------------------
