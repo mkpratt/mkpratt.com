@@ -1,7 +1,7 @@
 [
     {
         "name": "BYU Web Components",
-        "thumbnail": "assets/images/content/c1.jpg",
+        "thumbnail": "assets/images/content/byucomponents.jpg",
         "short-description": "Custom built components for large scale usage",
         "long-description": "From December 2016 until April 2017, I worked on a team of about 5 individuals to produce the first major release (1.0.0) of Brigham Young University's new theme redesign. These core components are used to update and standardize websites across BYU's enormous domain. These components integrate with all major browsers such as Chrome, Firefox, Safari, Edge, and IE11. They also integrate with many CMS systems such as Drupal and Wordpress.",
         "website-url": "http://2017-components-demo.cdn.byu.edu/",
@@ -10,12 +10,12 @@
             "https://www.webcomponents.org/introduction"
         ],
         "technologies-used": [
-            "Webpack", "Gulp", "Bower", "Polyfills", "Html5", "SCSS", "Javascript"
+            "webpack", "gulp", "bower", "npm", "web-components", "html5", "sass", "javascript"
         ]
     },
     {
         "name": "Friendability",
-        "thumbnail": "assets/images/content/c2.jpg",
+        "thumbnail": "assets/images/content/friendability.jpg",
         "short-description": "Connecting people based on their personality",
         "long-description": "Friendability is a social media website that connects people based on personality and location. Friendability strives to make more meaningful relationships instead of connecting you with people you will hardly want to intereact with. Built using a MEAN stack with a PUG view manager, this website also uses a Parse Server (parseplatform.org) as a shared non-relational mongodb for access across multiple platforms. Current platforms in use include Desktop and iOS devices (friendability iOS app). Friendability is a social media website that connects users with similar personalities. The Parse Server platform was chosen because of the ability to use it across platforms as well as a very explicit SDKs for both iOS and web technologies like Node. The Parse Server gives a very easy to integrate API which is nice for a social media website. This website also utilizes Amazon's AWS and is running on an EC2 instance. The current website only shows a landing page with a terms of use, privacy policies, and a way to contact Friendability owners at the moment, but other fundamental parts (like login and profile navigation) are under construction.",
         "website-url": "http://thefriendability.com/",
@@ -23,7 +23,7 @@
             "http://parseplatform.org/"
         ],
         "technologies-used": [
-            "MongoDB", "Express.js", "Angular.js", "Node.js", "Html5", "SCSS", "Javascript", "AWS", "Parse Platform"
+            "nodejs", "mongodb", "angular", "html5", "sass", "css3", "javascript", "aws", "parse-platform"
         ]
     },
     {
@@ -34,7 +34,10 @@
         "website-url": "http://dpd.byu.edu/",
         "related-links": [],
         "technologies-used": [
-            "ASP.NET MVC 5", "Angular.js", "C#", "Angular Material", "SCSS", "Javascript", "Web Components", "CAS Authentication"
+            "csharp", "angular", "sass", "javascript", "web-components"
+        ],
+        "more-tech": [
+            ".NET MVC", "Angular.js", "Angular Material", "CAS"
         ]
     },
     {
@@ -45,7 +48,10 @@
         "website-url": "http://genomes.byu.edu/",
         "related-links": [],
         "technologies-used": [
-            "ASP.NET Core", "Entity Framework Core", "Angular.js", "Angular Material", "C#", "SCSS", "Javascript", "Web Components", "CAS Authentication"
+            "csharp", "angular", "javascript", "sass", "web-components"
+        ],
+        "more-tech": [
+            ".NET Core", "Entity Framework Core", "Angular.js", "Angular Material", "CAS"
         ]
     },
     {
@@ -56,18 +62,24 @@
         "website-url": "http://lsexams.byu.edu/",
         "related-links": [],
         "technologies-used": [
-            "ASP.NET", "Angular.js", "Angular Material", "C#", "CSS3", "Javascript", "CAS Authentication"
+            "csharp", "angular", "javascript", "css3"
+        ],
+        "more-tech": [
+            ".NET", "Angular.js", "Angular Material", "CAS"
         ]
     },
     {
         "name": "Michael Pratt Developer Site",
-        "thumbnail": "assets/images/content/c1.jpg",
+        "thumbnail": "assets/images/content/mkpratt.jpg",
         "short-description": "Giving the user a new experience while learning about me",
         "long-description": "The LS Exam Builder website gives instructors the ability to simply and quickly create quizzes, tests, and exams for their classes. This website also gives an easy to use interface with which the students can take the exams. The exams are managed on a semester by semester basis. Also shows the results of the exams taken individually and if allowed by the instructor, collectively as well. This website was built to be accessible on iPad minis by students taking the exams as well as the instructors building the exams on a desktop.",
         "website-url": "http://lsexams.byu.edu/",
         "related-links": [],
         "technologies-used": [
-            "Javascript", "THREE.js", "TWEEN.js", "WebGL", "HTML5", "CSS3"
+            "javascript", "html5", "css3"
+        ],
+        "more-tech": [
+            "threejs", "tweenjs", "webgl"
         ]
     },
     {
@@ -78,7 +90,7 @@
         "website-url": "http://lsexams.byu.edu/",
         "related-links": [],
         "technologies-used": [
-            "Javascript", "THREE.js", "TWEEN.js", "WebGL", "HTML5", "CSS3"
+            "javascript", "html5", "css3"
         ]
     }
 ]

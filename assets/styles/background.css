@@ -4,15 +4,53 @@
   background-size: cover;
 }
 
-.nebulae {
-  background-image: url(../images/neb.png), url(../images/neb-flipped.png);
-  background-size: cover, cover;
+/*.nebulae {
+  /* background-image: url(../images/neb.png), url(../images/neb-flipped.png);
+  background-size: 100%, 100%;
   background-position: -25% 0%, 100% 0%;
+  background-position: left -25% bottom 10%, right -25% bottom -10%;
   background-blend-mode: color-dodge;
+  height: 120%;
+  width: 120%;
+  z-index: 2; 
+
+  background-image: url(../images/neb.png), url(../images/neb-flipped.png);
+  background-size: 115%, 110%;
+  /* background-position: -25% 0%, 100% 0%; 
+  background-position: left 150% bottom 25%, right 100% bottom 25%;
+  background-blend-mode: color-dodge;
+  height: 120%;
+  width: 120%;
+  z-index: 2;
+}*/
+
+.nebula {
   height: 110%;
   width: 110%;
-  z-index: 2;
+  top: 5%;
+  mix-blend-mode: color-dodge;
 }
+
+
+.nebula1 {
+  left: -10%;
+  z-index: 2;
+  background-image: url('../images/neb.png');
+}
+
+.nebula2 {
+  width: 150%;
+  height: 125%;
+  top: -5%;
+  right: -25%;
+  z-index: 4;
+  background-image: url('../images/neb-flipped.png');
+  /* mix-blend-mode: color-dodge; */
+}
+
+/* .nebula1, .nebula2 {
+  mix-blend-mode: color-dodge;
+} */
 
 .stars {
   height: 120%;

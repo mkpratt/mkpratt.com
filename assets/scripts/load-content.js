@@ -1,10 +1,9 @@
 function loadJSON(url, callback) {   
     let xobj = new XMLHttpRequest();
         xobj.overrideMimeType("application/json");
-    xobj.open('GET', url, true); // Replace 'my_data' with the path to your file
+    xobj.open('GET', url, true);
     xobj.onreadystatechange = function () {
         if (xobj.readyState == 4 && xobj.status == "200") {
-            // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
             callback(xobj.responseText);
         }
     };
@@ -15,9 +14,7 @@ let dataObject = {};
 let selectedIdx = -1;
 
 function loadProjectContent(callback) {
-    // obj not defined
     var content = dataObject[selectedIdx];
-    // maybe have to do the fetch in the click event listener
     fetch(window.location.href + 'views/details-template.html').then(data => data.text()).then(data => {
         let template = data;
         let container = document.createElement('div');
@@ -32,11 +29,36 @@ function loadProjectContent(callback) {
                            .replace(/{{thumbnail}}/g, window.location.href + content["thumbnail"]);
 
         container.innerHTML = template;
+
+        let iconRow = container.querySelector('#iconRow');
+        content["technologies-used"].forEach(function(item) {
+            let iconWrapper = document.createElement('span');
+            iconWrapper.classList.add('icon-wrapper');
+
+            let icon = document.createElement('img');
+            icon.id = item;
+            icon.classList.add('icon');
+            icon.src = window.location.href + '/assets/images/icons/blue/' + item + '.png';
+
+            let iconTitle = document.createElement('span');
+            iconTitle.classList.add('icon-title');
+            iconTitle.innerHTML = iconNames[item];
+
+            iconWrapper.appendChild(icon);
+            iconWrapper.appendChild(iconTitle);
+            iconRow.appendChild(iconWrapper);
+        });
+
         document.body.appendChild(container);
+
+        let ps = document.createElement('script');
+        ps.src = 'assets/scripts/particle-system.js';
+        container.appendChild(ps);
 
         if (callback) callback();
     });
 };
+
 function loadProjectJSON(url, callback) {
     fetch(window.location.href + 'views/content-template.html').then(data => data.text()).then(data => {
         let template = data;
@@ -62,3 +84,24 @@ function loadProjectJSON(url, callback) {
         });    
     });
 };
+
+iconNames = {
+    "angular" : "Angular",
+    "aws": "AWS",
+    "bower": "Bower",
+    "csharp": "C#",
+    "css3": "CSS3",
+    "github" : "GitHub",
+    "gulp" : "Gulp",
+    "html5" : "HTML5",
+    "javascript" : "Javascript",
+    "linkedin" : "LinkedIn",
+    "mongodb" : "MongoDB",
+    "nodejs" : "Node.js",
+    "npm" : "Node Package Manager",
+    "parse-platform" : "Parse Platform",
+    "sass" : "Sass",
+    "swift" : "Swift",
+    "web-components" : "Web Components",
+    "webpack" : "Webpack",
+}

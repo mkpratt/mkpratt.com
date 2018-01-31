@@ -1,9 +1,11 @@
 function resizeNavWrapper() {
-    let h = window.innerHeight;
-    let cubeSize = (h / 2) + 50;
-    let nw = document.querySelector('#navWrapper');
-    nw.style.width = (cubeSize + 450) + 'px';
-    nw.style.opacity = 1;
+    if (CURRENT_STATE && CURRENT_STATE === State.MAIN) {
+        let h = window.innerHeight;
+        let cubeSize = (h / 2) + 50;
+        let nw = document.querySelector('#navWrapper');
+        nw.style.width = (cubeSize + 450) + 'px';
+        nw.style.opacity = 1;
+    }
 };
 window.addEventListener('resize', resizeNavWrapper);
 

@@ -1,6 +1,5 @@
 .bg {
   height: 120%;
-  /* width set dynamically based on window size */
   position: absolute;
   top: -10%;
   background-color: #3f2537;
@@ -10,7 +9,6 @@
   -ms-transform: skewX(-23deg);
   transform: skewX(-23deg);
 
-  /* inherently has no transition */
   transition: none;
 
   -webkit-box-shadow: 0px 0px 88px 5px rgba(0,0,0,0.93);
@@ -18,14 +16,6 @@
   box-shadow: 0px 0px 88px 5px rgba(0,0,0,0.93);
 
   z-index: 1000;
-}
-
-.details-wrapper {
-  color: #fff;
-}
-
-.details-wrapper > * {
-  opacity: 0;
 }
 
 .background-animating {
@@ -63,7 +53,6 @@
   width: 100vw;
   position: absolute;
   z-index: 2000;
-  padding: 5% 25% 0 25%;
   box-sizing: border-box;
   overflow-x: hidden;
   overflow-y: auto;
@@ -79,7 +68,6 @@
   margin: 20px 0;
   will-change: left, opacity;
   z-index: 1110;
-  /* hidden at the start */
   opacity: 0;
   position: relative;
   left: 200px;
@@ -192,19 +180,4 @@
 
 .text-wrapper > p {
   font-size: 20px;
-}
-
-.on {
-  animation: flicker 1.8s forwards;
-}
-
-@keyframes flicker
-{
-  0% { opacity: 0; }
-  9% { opacity: 0; }
-  10% { opacity: .5; }
-  13% { opacity: 0; }
-  20% { opacity: .5; }
-  25% { opacity: 1; }
-  100% { opacity: 1; }
 }

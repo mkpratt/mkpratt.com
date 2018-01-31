@@ -39,7 +39,7 @@ var rad90 = Math.PI / 2;
 var textureLoader, jsonLoader;
 var obj3d;
 
-var neb, star1, star2, star3, star4;
+var neb1, neb2, star1, star2, star3, star4;
 
 var rotYOffset = 0, rotZOffset = 0, t = 0, csin;
 
@@ -148,8 +148,9 @@ function init() {
   document.addEventListener('keydown', onDocumentKeyDown, false);
 
   // IMAGE ELEMENTS
-  neb = document.getElementById('nebulae');
-  //neb2 = document.getElementById('nebula2');
+  // neb = document.getElementById('nebulae');
+  neb1 = document.getElementById('nebula1');
+  neb2 = document.getElementById('nebula2');
   star1 = document.getElementById('stars1');
   star2 = document.getElementById('stars2');
   star3 = document.getElementById('stars3');
@@ -177,9 +178,11 @@ function animate() {
     csin = 0.24 * Math.sin(t);
     // Image Positions
     star1.style.transform = 'matrix3d(1,0,0.00,0,0.00,1,0.00,0,0,0,1,0,' + (csin * 175) + ',0,0,1)';
+    neb1.style.transform = 'matrix3d(1,0,0.00,0,0.00,1,0.00,0,0,0,1,0,' + (csin * 150) + ',0,0,1)';
     star2.style.transform = 'matrix3d(1,0,0.00,0,0.00,1,0.00,0,0,0,1,0,' + (csin * 200) + ',0,0,1)';
-    neb.style.backgroundPosition = (25 + (70 * csin)) + '% 0%, ' + (100 - (70 * csin)) + '% 0%';
+    //neb.style.backgroundPosition = 'left -' + (25 - (70 * csin)) + '% bottom 10%, right -' + (25 - (70 * csin)) + '% bottom -10%';
     //console.log((25 + (70 * -csin)) + '% 0%, ' + (100 + (70 * csin)) + '% 0%');
+    neb2.style.transform = 'matrix3d(1,0,0.00,0,0.00,1,0.00,0,0,0,1,0,' + (csin * 500) + ',0,0,1)';
     star3.style.transform = 'matrix3d(1,0,0.00,0,0.00,1,0.00,0,0,0,1,0,' + (csin * 625) + ',0,0,1)';
     star4.style.transform = 'matrix3d(1,0,0.00,0,0.00,1,0.00,0,0,0,1,0,' + (csin * 950) + ',0,0,1)';
     // Object Rotation
@@ -290,10 +293,13 @@ function destroy() {
 async function setOpacity(op) {
   let nw = document.querySelector('#navWrapper');
   // FIX OPACITY FADE IN
+  // NEED TO TRANSITION OUT?
   if (op > 0) {
     nw.style.opacity = '1';
+    nw.style.display = 'flex';
   } else {
     nw.style.opacity = '0';
+    nw.style.display = 'none';
   }
   obj3d.traverse(function(o) {
     o.children.forEach(function(el) {

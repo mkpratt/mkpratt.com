@@ -70,10 +70,43 @@ function showDetails() {
     bg.classList.remove('showing-details');
     bg.classList.add('detailed-view');
     bg.removeEventListener('transitionend', _func);
-    // flicker animation to "turn on" the content
-    var scr = document.createElement('script');
-    scr.src = 'assets/scripts/flicker.js';
-    bg.appendChild(scr)
+
+    // Show detailed content
+    let header = document.querySelector('#detailsHeader');
+    header.addEventListener('transitionend', function _hfunc() {
+      header.classList.remove('details-animating');
+      header.removeEventListener('transitionend', _hfunc);
+
+      // Show title
+      let title = header.querySelector('#detailsTitle');
+      title.addEventListener('transitionend', function _tfunc() {
+        title.classList.remove('details-animating');
+        title.removeEventListener('transitionend', _tfunc);
+      });
+      title.classList.add('title-in');
+      title.classList.add('details-animating');
+
+      // Show icons
+      let icons = document.querySelector('#iconRow');
+      icons.addEventListener('transitionend', function _ifunc() {
+        icons.classList.remove('details-animating');
+        icons.removeEventListener('transitionend', _ifunc);
+      });
+      icons.classList.add('details-animating');
+      icons.classList.add('icons-in');
+
+      // Show content
+      let wrapper = document.querySelector('#detailsWrapper');
+      wrapper.addEventListener('transitionend', function _wfunc(){
+        wrapper.classList.remove('details-animating');
+        wrapper.removeEventListener('transitionend', _wfunc);
+      });
+      wrapper.classList.add('wrapper-in');
+      wrapper.classList.add('details-animating');
+    });
+
+    header.classList.add('details-animating');
+    header.classList.add('header-in');
   });
 
   bg.style.transform = 'skewX(-23deg) translateX(' + -(bgSkewOffset) + 'px)';
@@ -83,15 +116,56 @@ function hideDetails() {
   bg.innerHTML = '';
   bg.classList.remove('detailed-view');
   bg.classList.add('hiding-details');
-  document.body.removeChild(document.querySelector('#projectDetails'));
 
+  // Remove title
+  let title = document.querySelector('#detailsTitle');
+  title.addEventListener('transitionend', function _tfunc() {
+    title.classList.remove('details-animating');    
+    title.removeEventListener('transitionend', _tfunc);
+  });
+  title.classList.add('details-animating');  
+  title.classList.remove('title-in');
+
+  // Remove icons
+  let icons = document.querySelector('#iconRow');
+  icons.addEventListener('transitionend', function _wfunc() {
+    icons.classList.remove('details-animating');
+    icons.removeEventListener('transitionend', _wfunc);
+  });
+  icons.classList.add('details-animating');
+  icons.classList.remove('icons-in');
+
+  // Remove wrapper
+  let wrapper = document.querySelector('#detailsWrapper');
+  wrapper.addEventListener('transitionend', function _wfunc() {
+    wrapper.classList.remove('details-animating');
+    wrapper.removeEventListener('transitionend', _wfunc);
+  });
+  wrapper.classList.add('details-animating');
+  wrapper.classList.remove('wrapper-in');
+
+  // Remove header
+  let header = document.querySelector('#detailsHeader');
+  header.addEventListener('transitionend', function _hfunc() {
+    header.classList.remove('details-animating');
+    header.removeEventListener('transitionend', _hfunc);
+  });
+  header.classList.add('details-animating-delay');
+  header.classList.remove('header-in');
+
+  // wait for the header to finish before transitioning to the overview
+  // delay = 2 * transition delay (320) title + header transitions
+  setTimeout(projectsOverview, 640);
+};
+function projectsOverview() {
+  // Remove project details, load project overview
+  document.body.removeChild(document.querySelector('#projectDetails'));
   bg.addEventListener('transitionend', function _func() {
     bg.classList.remove('hiding-details');
     bg.removeEventListener('transitionend', _func);
     // load projects again
     loadProjects();
   });
-
   bg.classList.add('background-animating');
   bg.style.transform = 'skewX(-23deg) translateX(525px)';
 };

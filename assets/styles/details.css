@@ -1,0 +1,129 @@
+.details-header {
+  height: 40%;
+  width: 100%;
+  background-color: #0F1720;
+  position: absolute;
+  top: -40%;
+  transition: none;
+  will-change: top;
+  overflow: hidden;
+  background: mix(#131D29, #0F1720, 70%);
+}
+
+.header-in {
+  top: 0;
+}
+
+.btn-back {
+  color: #fff;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 30000;
+}
+
+.lg-title {
+  font-size: 70px;
+  margin: 0 20%;
+  color: white;
+  position: absolute;
+  top: 50%;
+  left: 200px;
+  transform: translateY(-50%);
+  opacity: 0;
+  transition: none;
+  will-change: opacity, left;
+}
+
+.title-in {
+  left: 0;
+  opacity: 1;
+}
+
+.details-icons {
+  height: 100px;
+  width: 100%;
+  padding: 0 20%;
+  box-sizing: border-box;    
+  position: absolute;
+  top: 40%;
+  left: 200px;
+  transform: translateY(-50px);
+  opacity: 0;
+  will-change: opacity, left;
+}
+
+.icons-in {
+  left: 0;
+  opacity: 1;
+}
+
+.icon-title {
+  color: #fff;
+  font-size: 12px;
+  transform: translateX(-135px);
+  position: absolute;
+  top: 50%;
+  width: 120px;
+  text-align: center;
+  z-index: 20100;
+  opacity: 0;
+  -webkit-transition: all 160ms ease; 
+  -moz-transition: all 160ms ease; 
+  -o-transition: all 160ms ease; 
+  transition: all 160ms ease; 
+}
+
+.icon {
+  height: 100px;
+  width: 100px;
+  position: relative;
+  z-index: 20110;
+  margin-right: 25px;
+}
+.icon:hover + .icon-title {
+  font-size: 16px;
+  top: 110%;
+  opacity: 1;
+}
+
+.details-wrapper {
+  position: absolute;
+  top: 40%;
+  left: 200px;
+  color: #fff;
+  margin: 100px 0 0 0;
+  padding: 0 20%;
+  opacity: 0;
+  transition: none;
+  will-change: opacity, left;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.wrapper-in {
+  left: 0;
+  opacity: 1;
+}
+
+.details-animating {
+  -webkit-transition: all 320ms cubic-bezier(0.230, 1.000, 0.320, 1.000); 
+  -moz-transition: all 320ms cubic-bezier(0.230, 1.000, 0.320, 1.000); 
+  -o-transition: all 320ms cubic-bezier(0.230, 1.000, 0.320, 1.000); 
+  transition: all 320ms cubic-bezier(0.230, 1.000, 0.320, 1.000);
+}
+
+.details-animating-delay {
+  -webkit-transition: all 320ms cubic-bezier(0.230, 1.000, 0.320, 1.000) 320ms; 
+  -moz-transition: all 320ms cubic-bezier(0.230, 1.000, 0.320, 1.000) 320ms; 
+  -o-transition: all 320ms cubic-bezier(0.230, 1.000, 0.320, 1.000) 320ms; 
+  transition: all 320ms cubic-bezier(0.230, 1.000, 0.320, 1.000) 320ms;
+}
+
+.md-title {
+  font-size: 22px;
+}
+
+.pg {
+  line-height: 26px;
+}
