@@ -1,6 +1,6 @@
 @font-face {
   font-family: United;
-  src: url(../fonts/UnitedSansRgHv.otf);
+  src: url(../../assets/fonts/UnitedSansRgHv.otf);
 }
 
 html {
@@ -53,7 +53,7 @@ body {
   overflow: hidden;
   position: absolute;
   z-index: 10000;
-  background-image: url("../images/leakf.png");
+  background-image: url("../../assets/images/leakf.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;

@@ -52,7 +52,7 @@ function loadProjectContent(callback) {
         document.body.appendChild(container);
 
         let ps = document.createElement('script');
-        ps.src = 'assets/scripts/particle-system.js';
+        ps.src = 'src/scripts/particle-system.js';
         container.appendChild(ps);
 
         if (callback) callback();

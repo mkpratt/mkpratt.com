@@ -158,7 +158,7 @@ function init() {
 };
 
 async function loadJson(shape, obj, posx, posy, posz, rotx, roty, rotz, scale, name) {
-  jsonLoader.load('assets/scripts/models/' + shape + '.js', function(g) {
+  jsonLoader.load('src/scripts/models/' + shape + '.js', function(g) {
     obj = new THREE.Mesh(g, new THREE.MeshPhongMaterial({ shininess: 100, map: textureLoader.load('assets/textures/uv_' + shape + '.png'), transparent: true }));
     obj.position.set(posx,posy,posz); 
     obj.rotation.set(rotx,roty,rotz); 
@@ -339,7 +339,7 @@ async function hideTinyCube() {
 //--------------------------------------------------------------------------------------------------
 
 function loadProjects() {
-  let url = window.location.href + 'assets/scripts/content/';
+  let url = window.location.href + 'src/scripts/content/';
   switch (CURRENT_PAGE) {
     case 1: url += 'frontend.json'; break;
     case 2: url += 'backend.json'; break;
