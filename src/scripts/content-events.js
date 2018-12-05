@@ -78,7 +78,7 @@ function showDetails() {
       header.removeEventListener('transitionend', _hfunc);
 
       // Show title
-      let title = header.querySelector('#detailsTitle');
+      let title = header.querySelector('#titleWrapper');
       title.addEventListener('transitionend', function _tfunc() {
         title.classList.remove('details-animating');
         title.removeEventListener('transitionend', _tfunc);
@@ -118,7 +118,7 @@ function hideDetails() {
   bg.classList.add('hiding-details');
 
   // Remove title
-  let title = document.querySelector('#detailsTitle');
+  let title = document.querySelector('#titleWrapper');
   title.addEventListener('transitionend', function _tfunc() {
     title.classList.remove('details-animating');    
     title.removeEventListener('transitionend', _tfunc);

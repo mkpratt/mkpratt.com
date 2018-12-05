@@ -1,0 +1,81 @@
+[
+    {
+        "name": "Friendability",
+        "thumbnail": "assets/images/content/c3.jpg",
+        "subheader": "<h1><i><strong>Connecting people based on their personality</strong></i></h1>",
+        "description": "<h1>Problem</h1><p>There are too many social media sites that focus on content rather than meaningful relationships.<br>Of the given social media sites that do focus on relationships, they only connect people based on appearances or common \"friends.\"<br>There are no social media sites that focus on connecting individuals based on similar interests and personality.</p><h1>End Goal</h1><p>Friendability wants to connect the user with people they actually want to get to know and can get along with. Friendability is a social media platform that will create meaningful relationships without shoving mindless content into the user's life.</p><h1>Solution</h1><p>The user is connected with people based on their personality and interests. The user takes an initial questionnaire to determine their personality type to begin connecting them with people who have similar personalities.</p><h1>Product</h1><p>Friendabilty is currently being developed for the iPhone. It also allows users to have a desktop web application profile with which they can perform basic social media and profile functionalities.</p>",
+        "website-url": "http://thefriendability.com/",
+        "technologies-used": [
+            "nodejs", "aws", "parse-platform"
+        ],
+        "more-tech": [
+            "firebase", "express"
+        ]
+    },
+    {
+        "name": "Top News Web Application",
+        "thumbnail": "assets/images/content/friendability.jpg",
+        "subheader": "<h1><i>The news you care about</i></h1>",
+        "description": "<h1>Problem</h1><p>There are so many networks that offer news. It can be tiresome to visit different websites for each of them and to find all the top headlines you want to know about.</p><h1>End Goal</h1><p>Create one website that brings together the top news headlines from each news network you care about, like Apple News on iPhone.<br />I want it to be easy to find and follow the news networks you like, show a simple view of the top articles from each, and be able to save articles for future reference.</p><h1>Solution</h1><p><strong>News Api</strong> (newsapi.org) offers a single endpoint to request all the top news articles for popular news networks. This site authenticates with Google's Firebase and uses NodeJS to interact with a Mongo database to store and retrieve the user's preferences and saved news articles. </p><h1>Product</h1><p>This site was hosted on an AWS server and is currently being relocated.</p>",
+        "website-url": "",
+        "technologies-used": [
+            "nodejs", "mongodb", "aws"
+        ],
+        "more-tech": [
+            "firebase", "express"
+        ]
+    },
+    {
+        "name": "Family History Record Indexer",
+        "thumbnail": "assets/images/content/byucomponents.jpg",
+        "subheader": "<h1><i>Desktop client-server application</i></h1>",
+        "description": "",
+        "website-url": "",
+        "technologies-used": [
+            "java", "sqlite"
+        ]
+    },
+    {
+        "name": "Settlers of Catan",
+        "thumbnail": "assets/images/content/c4.jpg",
+        "subheader": "<h1><i>Desktop client-server application</i></h1>",
+        "description": "",
+        "website-url": "",
+        "technologies-used": [
+            "java", "sqlite"
+        ]
+    },
+    {
+        "name": "Algorithm Design and Analysis",
+        "thumbnail": "assets/images/content/c5.jpg",
+        "subheader": "",
+        "description": "",
+        "website-url": "",
+        "technologies-used": [
+            "csharp"
+        ]
+    },
+    {
+        "name": "Websites for the College of Life Sciences",
+        "thumbnail": "assets/images/content/mkpratt.jpg",
+        "subheader": "",
+        "description": "",
+        "website-url": "",
+        "technologies-used": [
+            "csharp", "mssqldb"
+        ],
+        "more-tech": [
+            "linq"
+        ]
+    },
+    {
+        "name": "Systems Programming",
+        "thumbnail": "assets/images/content/c3.jpg",
+        "subheader": "",
+        "description": "",
+        "website-url": "",
+        "technologies-used": [
+            "c"
+        ]
+    }
+]

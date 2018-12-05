@@ -1,15 +1,16 @@
 <div id="detailsHeader" class="details-header">
     <div class="btn-back" style="cursor: pointer;" onclick="hideDetails()">Back</div>
-    <!-- canvas with cool bg animation here -->
     <div id="particles-background" class="vertical-centered-box"></div>
     <div id="particles-foreground" class="vertical-centered-box"></div>
-    <span id="detailsTitle" class="lg-title">{{name}}</span>
+    <div id="titleWrapper" class="title-wrapper">
+        <div id="detailsTitle" class="lg-title">{{name}}</div>
+        <div id="detailsSubheader" class="sm-title">{{subheader}}</div>
+    </div>
 </div>
 <div id="iconRow" class="details-icons"></div>
 <div id="detailsWrapper" class="details-wrapper">
-    <h3 id="shortDescription">{{short-description}}</h3>
-    <p id="longDescription">{{long-description}}</p>
-    <a id="websiteLink" href="{{website-url}}">Go to website</a>
-    <h4 id="relatedLinksHeader">Related links:</h4>
-    <div id="relatedLinksContainer"></div>
+    <div id="description">{{description}}</div>
+    <!-- <a id="websiteLink" href="{{website-url}}">Go to website</a> -->
+    <!-- <h4 id="relatedLinksHeader">Related links:</h4> -->
+    <!-- <div id="relatedLinksContainer"></div> -->
 </div>

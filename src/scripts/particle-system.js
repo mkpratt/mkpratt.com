@@ -226,7 +226,7 @@ particleground(document.getElementById('particles-foreground'), {
     maxSpeedY: 0.3,
     density: 15500, // One particle every n pixels
     curvedLines: false,
-    proximity: 140, // How close two dots need to be before they join
+    proximity: 0.00000000000001,//140, // How close two dots need to be before they join
     parallaxMultiplier: 26, // Lower the number is more extreme parallax
     particleRadius: 2, // Dot size
 });
@@ -240,7 +240,7 @@ particleground(document.getElementById('particles-background'), {
     maxSpeedY: 0.15,
     density: 8000, // One particle every n pixels
     curvedLines: false,
-    proximity: 35, // How close two dots need to be before they join
+    proximity: 0.00000000000001,//35, // How close two dots need to be before they join
     parallaxMultiplier: 40, // Lower the number is more extreme parallax
     particleRadius: 1, // Dot size
 });

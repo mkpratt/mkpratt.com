@@ -23,10 +23,10 @@ function loadProjectContent(callback) {
 
         // fill in detailed content
         template = template.replace(/{{name}}/g, content["name"])
-                           .replace(/{{short-description}}/g, content["short-description"])
-                           .replace(/{{long-description}}/g, content["long-description"])
+                           .replace(/{{subheader}}/g, content["subheader"])
+                           .replace(/{{description}}/g, content["description"])
                            .replace(/{{website-url}}/g, content["website-url"])
-                           .replace(/{{thumbnail}}/g, window.location.href + content["thumbnail"]);
+                           //.replace(/{{thumbnail}}/g, window.location.href + content["thumbnail"]);
 
         container.innerHTML = template;
 
@@ -69,7 +69,7 @@ function loadProjectJSON(url, callback) {
             for (let key in dataObject) {
                 let idx = parseInt(key);
                 els[idx].innerHTML = template.replace(/{{name}}/g, dataObject[idx]["name"])
-                                             .replace(/{{short-description}}/g, dataObject[idx]["short-description"])
+                                             //.replace(/{{short-description}}/g, dataObject[idx]["short-description"])
                                              .replace(/{{thumbnail}}/g, window.location.href + dataObject[idx]["thumbnail"]);
                 els[idx].addEventListener('click', function _func(e) {
                     if (projectsVisible) {

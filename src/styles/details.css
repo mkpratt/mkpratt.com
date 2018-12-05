@@ -22,10 +22,9 @@
   z-index: 30000;
 }
 
-.lg-title {
-  font-size: 70px;
-  margin: 0 20%;
+.title-wrapper {
   color: white;
+  margin: 0 20%;
   position: absolute;
   top: 50%;
   left: 200px;
@@ -33,6 +32,14 @@
   opacity: 0;
   transition: none;
   will-change: opacity, left;
+}
+
+.lg-title {
+  font-size: 70px;
+}
+
+.sm-title {
+  font-size: 18px;
 }
 
 .title-in {
@@ -118,6 +125,20 @@
   -moz-transition: all 320ms cubic-bezier(0.230, 1.000, 0.320, 1.000) 320ms; 
   -o-transition: all 320ms cubic-bezier(0.230, 1.000, 0.320, 1.000) 320ms; 
   transition: all 320ms cubic-bezier(0.230, 1.000, 0.320, 1.000) 320ms;
+}
+
+.details-wrapper p {
+  line-height: 28px;
+  font-size: 18px;
+  margin-bottom: 75px;
+}
+
+.details-wrapper a {
+  padding: 6px;
+  margin: 4px 6px;
+  display: inline-block;
+  background-color: #dca548;
+  border-radius: 3px;
 }
 
 .md-title {

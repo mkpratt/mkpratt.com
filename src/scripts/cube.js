@@ -384,7 +384,7 @@ function onDocumentMouseMove(event) {
 // 3D object clicks
 function onDocumentMouseClick(event) {
   event.preventDefault();
-  // FIX THIS
+  // REDO THIS
   if (INTERSECTED && CURRENT_STATE === State.MAIN) {
     switch (INTERSECTED.name) {
       case 'frontend':

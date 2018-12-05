@@ -1,0 +1,99 @@
+[
+    {
+        "name": "BYU Web Components",
+        "thumbnail": "assets/images/content/byucomponents.jpg",
+        "subheader": "<h1><i><strong>Custom built components for large scale usage</strong></i></h1>",
+        "description": "<h1>Problem</h1><p>Developers for the university websites have mixed knowledge of design standards.<br />Implementation of design standards was complicated and varied with each website.<br />No central library for developers to pull common university resources.</p><h1>End Goal</h1><p>We wanted to make even the most novice of developers write code like pros. By synthesizing hundreds of lines of code into one simple element, developers can maximize productivity within the defined brand guidelines.</p><h1>Solution</h1><p>Using the latest web technology, web components offer an easy and simple solution to creating custom HTML elements with scoped styles. These custom web components integrate seamlessly into any website and are compatible with all the major web browsers. For those browsers that don’t have full support for web components yet (e.g. Edge and IE11), the use of polyfills built into our content delivery network provide that functionality.</p><h1>Product</h1><p>Sites implementing the new web components:<br><a>www.byu.edu</a><a>math.byu.edu</a><a>speeches.byu.edu</a><a>map.byu.edu</a><a>arcmap.byu.edu</a><a>gradstudies.byu.edu</a><a>calendar.byu.edu</a><a>homecoming.byu.edu</a><a>photo.byu.edu</a><a>news.byu.edu</a><a>webcommunity.byu.edu</a><a>hs.byu.edu</a><a>ccc.byu.edu</a><a>campusfloral.byu.edu</a><a>brand.byu.edu</a><a>dpd.byu.edu</a><a>genomes.byu.edu</a><a>ctl.byu.edu</a><a>ece.byu.edu</a><a>cdn.byu.edu</a><a>sustainability-dev.byu.edu</a><a>compliance-stg.byu.edu</a><a>www3-etdev.et.byu.edu</a><a>greenteam-dev.byu.edu</a><a>www3-ceen.et.byu.edu</a>…and many more.</p>",
+        "website-url": "http://2017-components-demo.cdn.byu.edu/",
+        "related-links": [
+            "https://developers.google.com/web/fundamentals/web-components/",
+            "https://www.webcomponents.org/introduction"
+        ],
+        "technologies-used": [
+            "webpack", "gulp", "bower", "npm", "web-components", "html5", "sass", "javascript"
+        ]
+    },
+    {
+        "name": "Friendability",
+        "thumbnail": "assets/images/content/friendability.jpg",
+        "subheader": "<h1><i><strong>Connecting people based on their personality</strong></i></h1>",
+        "description": "<h1>Problem</h1><p>There are too many social media sites that focus on content rather than meaningful relationships.<br>Of the given social media sites that do focus on relationships, they only connect people based on appearances or common \"friends.\"<br>There are no social media sites that focus on connecting individuals based on similar interests and personality.</p><h1>End Goal</h1><p>Friendability wants to connect the user with people they actually want to get to know and can get along with. Friendability is a social media platform that will create meaningful relationships without shoving mindless content into the user's life.</p><h1>Solution</h1><p>The user is connected with people based on their personality and interests. The user takes an initial questionnaire to determine their personality type to begin connecting them with people who have similar personalities.</p><h1>Product</h1><p>Friendabilty is currently being developed for the iPhone. It also allows users to have a desktop web application profile with which they can perform basic social media and profile functionalities.</p>",
+        "website-url": "http://thefriendability.com/",
+        "related-links": [
+            "http://parseplatform.org/"
+        ],
+        "technologies-used": [
+            "nodejs", "mongodb", "angular", "html5", "sass", "css3", "javascript", "aws", "parse-platform"
+        ],
+        "more-tech": [
+            "firebase"
+        ]
+    },
+    {
+        "name": "Dietetics Program Application",
+        "thumbnail": "assets/images/content/c3.jpg",
+        "subheader": "<h1><i><strong>Simplifying the application to BYU's Dietetics Program</strong></i></h1>",
+        "description": "<h1>Problem</h1><p>The code used in the old website for the application to the Dietetics Program at Brigham Young University was outdated and slow.<br>The old website had a complicated and dull user interface resulting in a difficult user experience for both applicants and faculty in charge.</p><h1>End Goal</h1><p>I wanted to make the application process simple, easy to use, and to provide the user with a positive experience.<br>Applicants should be able to track their progress easily and know exactly what the Dietetics Program requires.<br>The faculty in charge of reviewing the applications will have a clear view of the applicants which will efficiently and effectively help the review process.</p><h1>Solution</h1><p>Build a simple user interface that cleanly displays information to the user. Applicants will have an application dashboard with their current applications. Applications are organized into sections that are easy to fill out and submit for review. Faculty are likewise given a faculty dashboard that displays all immediate pertinant information and can navigate to view applications in greater detail.</p><h1>Product</h1><p>The application to the Dietetics Program at BYU is currently published at dpd.byu.edu.</p>",
+        "website-url": "http://dpd.byu.edu/",
+        "related-links": [],
+        "technologies-used": [
+            "csharp", "angular", "sass", "javascript", "web-components"
+        ],
+        "more-tech": [
+            ".NET MVC", "Angular.js", "Angular Material", "CAS"
+        ]
+    },
+    {
+        "name": "Genome Assembly Database",
+        "thumbnail": "assets/images/content/c4.jpg",
+        "subheader": "<h1><i><strong>Easily accessible genome research data</strong></i></h1>",
+        "description": "<h1>Problem</h1><p>Professors for the College of Life Sciences at BYU have a passion for research. One professor in particular has a vast library of genomic research data that he would like to share with the world, but has had no current medium with which to upload and post his research.<br>Genomes are complex and hard to understand. The data for any particular genome can have an enormous amount of data to sift through and to find important pieces of information.</p><h1>End Goal</h1><p>Provide an online database that can accept large amounts of genome information.<br>Display the most important pieces of information on a genomic profile that is visible to the public.<br>Provide links for any user on the genomic profile to download the data for more in depth research.</p><h1>Solution</h1><p>The Genome Assembly Database has an Admin accessible portal to upload the new data collected from research. The website will parse the given data, pull out the important pieces, and display the the simplifed data on a genomic profile. Anyone visiting the site will have access to these profiles and can download the more complex data.</p><h1>Product</h1><p>The Genome Assembly Database website is published at genomes.byu.edu.</p>",
+        "website-url": "http://genomes.byu.edu/",
+        "related-links": [],
+        "technologies-used": [
+            "csharp", "angular", "javascript", "sass", "web-components"
+        ],
+        "more-tech": [
+            ".NET Core", "Entity Framework Core", "Angular.js", "Angular Material", "CAS"
+        ]
+    },
+    {
+        "name": "Life Sciences Exam Builder",
+        "thumbnail": "assets/images/content/c5.jpg",
+        "subheader": "<h1><i><strong>Making and taking exams was never easier</strong></i></h1>",
+        "description": "<h1>Problem</h1><p>Professors in the College of Life Sciences at BYU need to create new tests multiple times every semester.<br />Tests were given on paper which took an excessive amount of work to distribute, collect, grade, and return.<br />The tests needed to be accessible to hundreds of students at any given time within the test time parameters.</p><h1>End Goal</h1><p>I wanted to provide a simple interface for professors and teaching assistants to create tests, exams, and quizzes; likewise students will have a simple interface for taking the tests.<br />Students can access and take tests online on any device and location.<br />After testing is complete, the tests will be automatically graded and the professors will have a view of the results and statistics of the class.</p><h1>Solution</h1><p>Using AngularJS as the front-end framework with a C# back-end, this website is a quick and responsive tool that is easy to use.<br />This website simplifies work for everyone involved. Tests and exams can be harder to take and less exciting at times. However, using a simple interface can make taking tests easier to take and enjoyable to use.</p><h1>Product</h1><p>This website is published at lsexams.byu.edu.</p>",
+        "website-url": "http://lsexams.byu.edu/",
+        "related-links": [],
+        "technologies-used": [
+            "csharp", "angular", "javascript", "css3"
+        ],
+        "more-tech": [
+            ".NET", "Angular.js", "Angular Material", "CAS"
+        ]
+    },
+    {
+        "name": "Michael Pratt Developer Site",
+        "thumbnail": "assets/images/content/mkpratt.jpg",
+        "subheader": "<h1><i><strong>Giving the user a new experience while learning about me</strong></i></h1>",
+        "description": "<h1>Problem</h1><p>Websites can be too generic. Once you've seen one website, you've seen them all.<br />Boring websites can drive you to leave the site as fast as it took you to arrive.</p><h1>End Goal</h1><p>I want the user to experience something new. Something they haven't seen before. I want to give them all of this, while learning about me.<br />I want the user to step into a more creative space (literally) and to be able to think differently.</p><h1>Solution</h1><p>Instead of regular 2D layouts and generic menus and dropdowns, I decided to transport the user to the 3rd dimension. With a new enviroment the user can see and feel things not normally felt by visiting a normal website. Built with only Javascript, HTML, and CSS, this website offers a clean and simple to use interface. It also utilizes the THREE.js library to achieve the 3rd dimension environment.</p><h1>Product</h1><p>You are looking at it.</p>",
+        "website-url": "http://mkpratt.com/",
+        "related-links": [],
+        "technologies-used": [
+            "javascript", "html5", "css3"
+        ],
+        "more-tech": [
+            "threejs", "tweenjs", "webgl"
+        ]
+    },
+    {
+        "name": "Plant Passion Nutrition",
+        "thumbnail": "assets/images/content/c3.jpg",
+        "subheader": "<h1><i><strong>Wholistic passion for plant based nutrition</strong></i></h1>",
+        "description": "<p>This website is still in the design and architecture phase.</p>",
+        "website-url": "",
+        "related-links": [],
+        "technologies-used": [
+            "javascript", "html5", "css3"
+        ]
+    }
+]
